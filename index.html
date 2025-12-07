@@ -1,0 +1,2094 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="icon" type="image/png" href="https://i.pinimg.com/736x/2c/5b/ab/2c5bab6723ef8f80152bb4aaa4920fef.jpg">
+    <title>Perfe☪️✝️ miaumiau</title>
+    <style>
+         :root {
+            --bg: #071126;
+            --panel: #0f2130;
+            --card: #0e1620;
+            --muted: #98a0b0;
+            --accent1: #8b5cf6;
+            --accent2: #ff7aa2;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-2: rgba(255, 255, 255, 0.02);
+            --success: #26d07b;
+            --danger: #ff6b6b;
+        }
+        
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: radial-gradient(1000px 300px at 10% 10%, rgba(25, 40, 60, 0.6), transparent), linear-gradient(180deg, #071126 0%, #04101a 100%);
+            color: #e6eef8;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 28px auto;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start
+        }
+        
+        header {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 18px 28px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            box-shadow: 0 6px 24px rgba(4, 8, 16, 0.6)
+        }
+        
+        .logo {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent1), var(--accent2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 26px;
+            color: white;
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.18)
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 20px
+        }
+        
+        header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+        /* layout */
+        
+        .left {
+            width: 320px;
+            background: var(--panel);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 8px 26px rgba(2, 8, 16, 0.6)
+        }
+        
+        .main {
+            flex: 1;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005));
+            padding: 22px;
+            border-radius: 14px;
+            min-height: 520px
+        }
+        
+        .right {
+            width: 260px;
+            background: var(--panel);
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 8px 26px rgba(2, 8, 16, 0.6)
+        }
+        
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 10px
+        }
+        
+        .muted {
+            color: var(--muted);
+            font-size: 13px
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer
+        }
+        
+        .btn-ghost {
+            background: var(--glass);
+            color: var(--muted);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer
+        }
+        /* game menu */
+        
+        .game-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+        
+        .game-option {
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: var(--glass);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.02)
+        }
+        
+        .game-option.active {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            color: white;
+            box-shadow: 0 6px 18px rgba(139, 92, 246, 0.12)
+        }
+        
+        .scorebox {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+        
+        .spotify-card {
+            margin-top: 18px;
+            padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.02))
+        }
+        
+        .spotify-card h4 {
+            margin: 0 0 6px 0
+        }
+        
+        .recorder {
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--card)
+        }
+        /* memory grid */
+        
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px
+        }
+        
+        .card {
+            width: 100%;
+            padding-top: 66%;
+            position: relative;
+            border-radius: 12px;
+            perspective: 800px
+        }
+        
+        .card-inner {
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+            box-shadow: 0 8px 18px rgba(3, 8, 16, 0.6)
+        }
+        
+        .card-inner.flipped {
+            transform: rotateY(180deg)
+        }
+        
+        .card-face {
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px
+        }
+        
+        .card-front {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            color: var(--muted)
+        }
+        
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            color: white;
+            font-size: 26px
+        }
+        /* quiz */
+        
+        .quiz-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 12px
+        }
+        
+        .option {
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--glass);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.02)
+        }
+        
+        .option.locked {
+            opacity: 0.6;
+            pointer-events: none
+        }
+        
+        .option.correct {
+            background: linear-gradient(90deg, #2ee6a1, #1fb884);
+            color: #012a1c
+        }
+        
+        .option.wrong {
+            background: linear-gradient(90deg, #ff9b9b, #ff6b6b);
+            color: #2b0000
+        }
+        /* tetris & snake canvas */
+        
+        .game-canvas {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.02));
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+            align-items: center
+        }
+        
+        canvas {
+            background: transparent;
+            border-radius: 6px;
+            display: block
+        }
+        
+        .controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            justify-content: center
+        }
+        
+        .dir {
+            width: 80px;
+            height: 60px;
+            border-radius: 10px;
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none
+        }
+        
+        .next-block {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            background: var(--card);
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+        /* overlay messages */
+        
+        .overlay {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 6, 12, 0.6);
+            z-index: 300;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s
+        }
+        
+        .overlay.show {
+            opacity: 1;
+            pointer-events: auto
+        }
+        
+        .modal {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            padding: 22px;
+            border-radius: 14px;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(2, 8, 16, 0.6)
+        }
+        
+        .confetti {
+            height: 80px
+        }
+        
+        .motivate {
+            font-weight: 700;
+            font-size: 18px;
+            margin-top: 6px
+        }
+        
+        .muted-small {
+            color: var(--muted);
+            font-size: 13px
+        }
+        
+        footer {
+            margin-top: 18px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            padding: 10px
+        }
+        /* responsive */
+        
+        @media (max-width:980px) {
+            .container {
+                flex-direction: column;
+                padding: 12px
+            }
+            .left,
+            .right {
+                width: 100%
+            }
+            .main {
+                width: 100%
+            }
+        }
+        /* small touches */
+        
+        .small {
+            font-size: 13px
+        }
+        
+        .badge {
+            background: var(--glass);
+            padding: 6px 10px;
+            border-radius: 999px
+        }
+        /* flappy specific small styles */
+        
+        .flappy-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px
+        }
+        
+        .flap-btn {
+            padding: 12px 18px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent1));
+            border: none;
+            color: white;
+            font-weight: 700;
+            cursor: pointer
+        }
+        
+        .flap-hint {
+            font-size: 13px;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 6px
+        }
+    </style>
+</head>
+
+<body>
+    <header style="max-width:1200px;margin:18px auto 0;display:flex;align-items:center;gap:16px;">
+        <div class="logo">❤</div>
+        <div>
+            <h1>Untukmu dari aku yang IMUT </h1>
+            <p>Dikala harimu sedang tidak baik baik saja ataupun mood kamu sedang tidak baik jangan lupa mainkan aku , dibuat khusus untuk Maria Conceta Pricylla De Louise Margareth 💖</p>
+        </div>
+    </header>
+
+    <div class="container" id="app">
+        <aside class="left">
+            <div class="section-title">Pilihan Game</div>
+            <div class="game-list" id="gameList">
+                <div class="game-option active" data-game="memory">Memory</div>
+                <div class="game-option" data-game="quiz">Quiz Cepat</div>
+                <div class="game-option" data-game="tetris">Tetris</div>
+                <div class="game-option" data-game="snake">Snake</div>
+                <div class="game-option" data-game="flappy">Flappy</div>
+                <div class="game-option">
+                    <a href="https://sofwana.github.io/miaumiauphoto/" target="_blank" style="color: white; text-decoration: none; display: block; padding: 10px; background-color: transparent;">Take a photo ? 😋</a>
+                </div>
+            </div>
+
+            <div class="scorebox" style="margin-top:14px;">
+                <div>
+                    <div class="small muted">Score tiap game</div>
+                    <div id="scores" style="font-weight:700;font-size:18px">Memory: 0 • Quiz: 0 • Tetris: 0 • Snake: 0 • Flappy: 0</div>
+                </div>
+                <div class="badge small">Score</div>
+            </div>
+
+            <div class="spotify-card">
+                <h4>Spotify Playlist</h4>
+                <div class="muted-small">Album / Playlist yang dapat diputar</div>
+                <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
+                    <div style="width:64px;height:64px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center">🎧</div>
+                    <div style="flex:1">
+                        <div style="font-weight:700">Album Khusus</div>
+                        <div class="muted-small" style="margin-top:4px">Klik play untuk memulai playlist</div>
+                    </div>
+                </div>
+                <div style="margin-top:12px;display:flex;gap:8px;">
+                    <button class="btn" id="playSpotify">Play Playlist</button>
+                    <button class="btn-ghost" id="openSpotify">Buka di Spotify</button>
+                </div>
+                <div id="audioPlayerWrapper" style="margin-top:12px;display:none">
+                    <audio id="spotifyAudio" controls style="width:100%"></audio>
+                </div>
+            </div>
+
+            <div class="recorder">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div><strong>Voice Note</strong>
+                        <div class="muted-small">Rekam pesan suara untuk dia</div>
+                    </div>
+                    <div id="recStatus" class="muted-small">Tidak merekam</div>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                    <button class="btn-ghost" id="recBtn">Mulai Rekam</button>
+                    <button class="btn-ghost" id="stopRecBtn" disabled>Stop</button>
+                    <button class="btn" id="playRecBtn" disabled>Play</button>
+                </div>
+                <div id="recordings" style="margin-top:10px"></div>
+            </div>
+
+        </aside>
+
+        <main class="main" id="mainArea">
+            <!-- Memory -->
+            <div id="memory" class="game-panel">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <h2>Memory </h2>
+                        <div class="muted-small">Cocokkan pasangan , kapan cocok sama kamunya 😋</div>
+                    </div>
+                    <div class="muted-small">Attempts: <span id="memAttempts">0</span></div>
+                </div>
+
+                <div style="margin-top:18px">
+                    <div class="memory-grid" id="memoryGrid"></div>
+                </div>
+                <div style="margin-top:14px;display:flex;gap:8px;align-items:center">
+                    <button class="btn" id="memReset">Reset</button>
+                    <div class="muted-small">Score: <span id="memScore">0</span></div>
+                </div>
+            </div>
+
+            <!-- Quiz -->
+            <div id="quiz" class="game-panel" style="display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <h2>Quiz Cepat</h2>
+                        <div class="muted-small">10 pertanyaan. Jawab menggunakan hati dan perasaan.</div>
+                    </div>
+                    <div class="muted-small">pertanyaan: <span id="quizTimer"></span></div>
+                </div>
+                <div id="quizBody" style="margin-top:18px">
+                    <div id="quizQ" style="font-weight:700;font-size:18px">Kepo yaa....</div>
+                    <div class="quiz-opts" id="quizOpts"></div>
+                </div>
+                <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+                    <button class="btn" id="quizStart">Mulai Quiz</button>
+                    <div class="muted-small">Nilai: <span id="quizScore">0</span></div>
+                </div>
+            </div>
+
+            <!-- Tetris -->
+            <div id="tetris" class="game-panel" style="display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <h2>Tetris</h2>
+                        <div class="muted-small">Gunakan tombol panah. Atas = rotasi, Bawah = percepat (tahan), Kanan/Kiri = geser</div>
+                    </div>
+                    <div class="muted-small">Score: <span id="tetrisScore">0</span></div>
+                </div>
+                <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start">
+                    <div class="game-canvas">
+                        <canvas id="tetrisCanvas" width="200" height="400"></canvas>
+                        <div style="display:flex;gap:8px;align-items:center;justify-content:center;margin-top:8px">
+                            <div class="dir" id="tLeft">◀</div>
+                            <div class="dir" id="tRotate">⤴</div>
+                            <div class="dir" id="tDown">▼</div>
+                            <div class="dir" id="tRight">▶</div>
+                        </div>
+                        <div style="margin-top:8px;display:flex;gap:8px;justify-content:center">
+                            <!-- START button restored -->
+                            <button class="btn" id="tStart">Start</button>
+                            <button class="btn-ghost" id="tReset">Reset</button>
+                        </div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div style="font-weight:700">Next</div>
+                        <div class="next-block"><canvas id="tNext" width="80" height="80"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Snake -->
+            <div id="snake" class="game-panel" style="display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <h2>Snake</h2>
+                        <div class="muted-small">Kontrol kanan/kiri/atas/bawah. Makan makanan untuk skor.</div>
+                    </div>
+                    <div class="muted-small">Score: <span id="snakeScore">0</span></div>
+                </div>
+                <div style="margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:8px">
+                    <div class="game-canvas" style="padding:10px">
+                        <canvas id="snakeCanvas" width="360" height="360"></canvas>
+                        <div class="controls" style="margin-top:10px">
+                            <div class="dir" id="sUp">▲</div>
+                        </div>
+                        <div class="controls">
+                            <div class="dir" id="sLeft">◀</div>
+                            <div class="dir" id="sDown">▼</div>
+                            <div class="dir" id="sRight">▶</div>
+                        </div>
+                        <div style="display:flex;gap:8px;margin-top:10px">
+                            <button class="btn" id="sStart">Start</button>
+                            <button class="btn-ghost" id="sReset">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADDED: FLAPPY -->
+            <div id="flappy" class="game-panel" style="display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <h2>Flappy</h2>
+                        <div class="muted-small">Tekan tombol "Flap" untuk membuat burung naik. Lewati pipa sebanyak mungkin!</div>
+                    </div>
+                    <div class="muted-small">Score: <span id="flappyScore">0</span></div>
+                </div>
+
+                <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start;flex-direction:column;align-items:center;">
+                    <div class="game-canvas">
+                        <canvas id="flappyCanvas" width="360" height="480"></canvas>
+                        <div class="flappy-controls">
+                            <!-- Start button removed: flap will act as Start -->
+                            <button class="btn-ghost" id="fReset">Reset</button>
+                        </div>
+                        <div style="margin-top:8px">
+                            <button class="flap-btn" id="flapBtn">FLAP</button>
+                            <div class="flap-hint">Tekan/ketuk FLAP untuk membuat burung naik (ketuk cepat untuk terus menjaga agar tidak jatuh).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <aside class="right">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <div class="section-title">Petunjuk & Motivasi</div>
+                    <div class="muted-small">Lakukan yang terbaik disetiap apa yang kamu lakukan dan jangan lupa untuk selalu tersenyum karena dunia ini terlalu hitam putih tanpa senyumanmu yang membuat berwarna ❤️‍🔥</div>
+                </div>
+                <div id="attemptBadge" style="color:var(--muted);font-size:13px">—</div>
+            </div>
+
+            <div style="margin-top:18px">
+                <div style="padding:12px;border-radius:12px;background:var(--card)">
+                    <div style="font-weight:700">Tips Cepat</div>
+                    <ul class="muted-small" style="padding-left:16px;margin:8px 0 0 0">
+                        <li>Gunakan rotasi di Tetris untuk mengisi celah</li>
+                        <li>Gunakan pattern saat bermain Memory</li>
+                        <li>Pada mobile, gunakan tombol di layar</li>
+                        <li>Pada hati, sayangi aku agar hari harimu menyenangkan</li>
+                        <li>Pada hari harimu, libatkan aku dihari harimu yang mungkin melelahkan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top:18px">
+                <div style="padding:12px;border-radius:12px;background:var(--card);text-align:center">
+                    <div style="font-weight:700">Motivasi Pembuat</div>
+                    <div class="muted-small" style="margin-top:8px">Setiap permainan adalah kesempatan untuk membuatnya tersenyum bahagia :)</div>
+                    <div style="margin-top:10px"><button class="btn-ghost" id="cheer">Berikan Semangat</button></div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <footer>
+        © 2025 made by fans number one ❤️ especially to keep him happy 🐱🐱
+    </footer>
+
+    <!-- overlay modal -->
+    <div class="overlay" id="overlay">
+        <div class="modal" id="modalContent">
+            <div id="confettiArea"></div>
+            <div id="modalTitle" class="motivate">Semangat !!</div>
+            <div id="modalText" class="muted-small" style="margin-top:8px">Kamu luar biasa, jangan pernah menyerah untuk mengejar sesuatu yang kamu cita citakan dan selalu menjadi orang baik diantara oran orang baik lainnya serta harus selalu tersenyum dan jangan lupakan aku agar kamu bahagia ❤️‍🔥</div>
+            <div style="margin-top:12px">
+                <button class="btn" id="modalClose">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ---------------------------
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Utilities & UI switching
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        --------------------------- */
+        const gameListEls = document.querySelectorAll('.game-option');
+        // UPDATED: include flappy panel
+        const panels = {
+            memory: document.getElementById('memory'),
+            quiz: document.getElementById('quiz'),
+            tetris: document.getElementById('tetris'),
+            snake: document.getElementById('snake'),
+            flappy: document.getElementById('flappy')
+        };
+        let activeGame = 'memory';
+
+        function switchGame(target) {
+            activeGame = target;
+            gameListEls.forEach(el => el.classList.toggle('active', el.dataset.game === target));
+            Object.keys(panels).forEach(k => panels[k].style.display = (k === target ? 'block' : 'none'));
+            // update attempted badge
+            document.getElementById('attemptBadge').textContent = activeGame.toUpperCase();
+        }
+        gameListEls.forEach(el => el.addEventListener('click', () => switchGame(el.dataset.game)));
+        switchGame('memory');
+
+        /* Modal */
+        const overlay = document.getElementById('overlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+        const modalClose = document.getElementById('modalClose');
+        modalClose.addEventListener('click', () => overlay.classList.remove('show'));
+        document.getElementById('cheer').addEventListener('click', () => {
+            showModal('Semangat!', 'Kamu luar biasa , jangan pernah menyerah untuk mengejar sesuatu yang kamu cita citakan dan selalu menjadi orang baik diantara orang orang baik lainnya serta harus selalu tersenyum dan jangan lupakan aku 💖');
+        });
+
+        function showModal(title, text) {
+            modalTitle.textContent = title;
+            modalText.textContent = text;
+            overlay.classList.add('show');
+        }
+
+        /* Update aggregated scores display */
+        /* UPDATED: include flappy */
+        const scoresState = {
+            memory: 0,
+            quiz: 0,
+            tetris: 0,
+            snake: 0,
+            flappy: 0
+        };
+
+        function updateScores() {
+            document.getElementById('scores').textContent = `Memory: ${scoresState.memory} • Quiz: ${scoresState.quiz} • Tetris: ${scoresState.tetris} • Snake: ${scoresState.snake} • Flappy: ${scoresState.flappy}`;
+        }
+        updateScores();
+
+        /* Small audio helpers for Tetris */
+        function getGameAudioCtx() {
+            if (!window._gameAudioCtx) {
+                const C = window.AudioContext || window.webkitAudioContext;
+                if (C) window._gameAudioCtx = new C();
+                else window._gameAudioCtx = null;
+            }
+            return window._gameAudioCtx;
+        }
+
+        function playTone(freq, time = 0.08, type = 'sine', vol = 0.08) {
+            const ctx = getGameAudioCtx();
+            if (!ctx) return;
+            const o = ctx.createOscillator();
+            const g = ctx.createGain();
+            o.type = type;
+            o.frequency.value = freq;
+            g.gain.value = vol;
+            o.connect(g);
+            g.connect(ctx.destination);
+            o.start();
+            o.stop(ctx.currentTime + time);
+        }
+
+        function playTetrisClearSound(lines) {
+            // lines: 1..4 — produce distinct short tones/arpeggio
+            if (!getGameAudioCtx()) return;
+            if (lines === 1) {
+                playTone(620, 0.08, 'sine', 0.09);
+            } else if (lines === 2) {
+                playTone(620, 0.07, 'sine', 0.09);
+                setTimeout(() => playTone(760, 0.07, 'sine', 0.08), 70);
+            } else if (lines === 3) {
+                playTone(620, 0.06, 'sine', 0.09);
+                setTimeout(() => playTone(760, 0.06, 'sine', 0.08), 60);
+                setTimeout(() => playTone(900, 0.06, 'sine', 0.07), 120);
+            } else { // 4 lines (tetris!)
+                playTone(760, 0.09, 'square', 0.11);
+                setTimeout(() => playTone(980, 0.12, 'sawtooth', 0.10), 90);
+            }
+        }
+
+        /* Prevent page scroll for arrow keys while playing games */
+        let preventKeys = false;
+        window.addEventListener('keydown', (e) => {
+            if (preventKeys && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+        /* Prevent touchmove during gameplay */
+        let preventTouch = false;
+        window.addEventListener('touchmove', (e) => {
+            if (preventTouch) e.preventDefault();
+        }, {
+            passive: false
+        });
+
+        /* ---------------------------
+           MEMORY (4x5) implementation
+        --------------------------- */
+        const emojis = ['🍓', '🍋', '🍉', '🍇', '🍑', '🍌', '🍒', '🍍', '🥭', '🥝']; // 10 pairs
+        let memGrid = [];
+        let memFirst = null;
+        let memLocked = false;
+        let memAttempts = 0;
+        let memScore = 0;
+
+        const memGridEl = document.getElementById('memoryGrid');
+        const memScoreEl = document.getElementById('memScore');
+        const memAttemptsEl = document.getElementById('memAttempts');
+
+        function initMemory() {
+            memGridEl.innerHTML = '';
+            memFirst = null;
+            memLocked = false;
+            memAttempts = 0;
+            memScore = 0;
+            memAttemptsEl.textContent = memAttempts;
+            memScoreEl.textContent = memScore;
+            // create doubled array and shuffle
+            const arr = [...emojis, ...emojis];
+            shuffle(arr);
+            memGrid = arr.map((val, i) => ({
+                id: i,
+                val,
+                matched: false,
+                flipped: false
+            }));
+            memGrid.forEach(card => {
+                const el = document.createElement('div');
+                el.className = 'card';
+                el.innerHTML = `<div class="card-inner" data-id="${card.id}">
+      <div class="card-face card-front">?</div>
+      <div class="card-face card-back">${card.val}</div>
+    </div>`;
+                memGridEl.appendChild(el);
+                el.addEventListener('click', () => memFlip(card.id));
+            });
+        }
+
+        function memFlip(id) {
+            if (memLocked) return;
+            const card = memGrid.find(c => c.id === id);
+            if (!card || card.matched || card.flipped) return;
+            const inner = memGridEl.querySelector(`.card-inner[data-id="${id}"]`);
+            card.flipped = true;
+            inner.classList.add('flipped');
+            if (!memFirst) {
+                memFirst = card;
+            } else {
+                memLocked = true;
+                memAttempts++;
+                memAttemptsEl.textContent = memAttempts;
+                if (memFirst.val === card.val) {
+                    // match
+                    setTimeout(() => {
+                        card.matched = true;
+                        memFirst.matched = true;
+                        // hide cards with fade
+                        const i1 = memGridEl.querySelector(`.card-inner[data-id="${id}"]`);
+                        const i2 = memGridEl.querySelector(`.card-inner[data-id="${memFirst.id}"]`);
+                        [i1, i2].forEach(el => {
+                            el.style.transition = 'transform .4s, opacity .4s';
+                            el.style.opacity = '0';
+                        });
+                        memScore += 10;
+                        memScoreEl.textContent = memScore;
+                        scoresState.memory = memScore;
+                        updateScores();
+                        memLocked = false;
+                        memFirst = null;
+                        // win?
+                        if (memGrid.filter(c => c.matched).length === memGrid.length) {
+                            // victory
+                            showModal('Kamu Hebat!', 'Ketika kamu ingin menyerah ingat selalu bagaimana cara kamu menyelesaikan game ini yang perlu diperjuangkan... "Kebahagiaanmu bukan milik orang yang membuatmu terluka, itu adalah hakmu, Kamu tidak perlu menyimpan semua beban dunia dalam hatimu. Setiap kali kamu memaafkan, kamu memberi ruang untuk dirimu tumbuh dan sembuh. Jangan biarkan dendam menjadi bagian dari identitasmu, karena kedamaianmu adalah hadiah yang hanya bisa kamu berikan untuk dirimu sendiri." 💖');
+                        }
+                    }, 400);
+                } else {
+                    // not match -> flip back
+                    setTimeout(() => {
+                        const i1 = memGridEl.querySelector(`.card-inner[data-id="${id}"]`);
+                        const i2 = memGridEl.querySelector(`.card-inner[data-id="${memFirst.id}"]`);
+                        [i1, i2].forEach(el => el.classList.remove('flipped'));
+                        card.flipped = false;
+                        memFirst.flipped = false;
+                        memLocked = false;
+                        memFirst = null;
+                        // small motivate
+                        showQuickToast('Ups! Coba lagi 🙂');
+                    }, 700);
+                }
+            }
+        }
+
+        document.getElementById('memReset').addEventListener('click', () => {
+            initMemory();
+        });
+
+        initMemory();
+
+        /* ---------------------------
+           QUIZ implementation
+        --------------------------- */
+        const quizQEl = document.getElementById('quizQ');
+        const quizOptsEl = document.getElementById('quizOpts');
+        const quizStartBtn = document.getElementById('quizStart');
+        const quizTimerEl = document.getElementById('quizTimer');
+        const quizScoreEl = document.getElementById('quizScore');
+
+        const quizSet = [{
+            q: '1+1x0 =',
+            opts: ['0', '2', '1', '100', '3'],
+            a: 2
+        }, {
+            q: 'Apa yang dimaksud dengan "daur ulang"?',
+            opts: ['Menggunakan barang bekas untuk produk baru', 'Menghancurkan barang menjadi sampah', 'Menjual barang bekas', 'Membuang barang ke tempat sampah', 'membakar barang bekas'],
+            a: 0
+        }, {
+            q: 'Apa unsur kimia dengan simbol " O " ?',
+            opts: ['Oksigen', 'Ozon', 'Oksida', 'Oksalat', 'Air'],
+            a: 0
+        }, {
+            q: 'Siapa yang menulis novel "Harry Potter" ?',
+            opts: ['J.R.R Tolkien', 'George R.R. Martin', 'Suzanne Collins', 'J.K. Rowling', 'SOFWAN'],
+            a: 3
+        }, {
+            q: 'Apa yang membuat kamu selalu senyum-senyum pas baca chat aku?',
+            opts: ['Karena aku lucu', 'Karena aku cute banget', 'Karena kamu jatuh cinta diam diam', 'Karena aku pasti ngangenin', 'Semua benar, nggak bisa dipungkiri'],
+            a: 4
+        }, {
+            q: 'Apa yang paling penting dalam hidup kamu?',
+            opts: ['Makanan', 'Tidur', 'Uang', 'Senyum aku', 'Semua benar, yang pasti aku harus ada'],
+            a: 4
+        }, {
+            q: 'Kalau aku jadi superhero, kamu akan jadi apa?',
+            opts: ['Semua benar, karena pasti kita saling melengkapi', 'Sidekick yang setia', 'Penyelamat hati', 'Orang yang selalu ada di samping aku', 'Penonton yang selalu mendukung aku'],
+            a: 0
+        }, {
+            q: 'Apa ibu kota Jepang?',
+            opts: ['Tokyo', 'Kyoto', 'Seoul', 'Osaka', 'Jakarta'],
+            a: 0
+        }, {
+            q: 'Apa yang disukai oleh Louise?',
+            opts: ['Jajan', 'Bermain', 'Jalan-jalan', 'Sofwan', 'Berenang'],
+            a: 3
+        }, {
+            q: 'Apa yang selalu ada di hati louise?',
+            opts: ['Aku', 'Cuma aku', 'Selalu aku', 'Hanya aku', 'Sudah pasti semua benar'],
+            a: 4
+        }, ];
+
+        let quizIndex = 0,
+            quizScore = 0,
+            quizBusy = false,
+            quizTimer = null;
+
+        function renderQuizQuestion() {
+            const cur = quizSet[quizIndex];
+            quizQEl.textContent = `${quizIndex+1}. ${cur.q}`;
+            quizOptsEl.innerHTML = '';
+            cur.opts.forEach((opt, i) => {
+                const el = document.createElement('div');
+                el.className = 'option';
+                el.textContent = opt;
+                el.dataset.index = i;
+                el.addEventListener('click', () => handleQuizAnswer(i, el));
+                quizOptsEl.appendChild(el);
+            });
+            quizTimerEl.textContent = `${quizIndex+1}/${quizSet.length}`;
+        }
+
+        function handleQuizAnswer(index, el) {
+            if (quizBusy) return;
+            quizBusy = true;
+            // lock other options
+            [...quizOptsEl.children].forEach(o => o.classList.add('locked'));
+            const cur = quizSet[quizIndex];
+            if (index === cur.a) {
+                el.classList.add('correct');
+                quizScore += 10;
+            } else {
+                el.classList.add('wrong');
+                // show correct
+                const correctEl = [...quizOptsEl.children].find(x => +x.dataset.index === cur.a);
+                if (correctEl) correctEl.classList.add('correct');
+            }
+            // wait 1.5s then next
+            setTimeout(() => {
+                quizIndex++;
+                if (quizIndex >= quizSet.length) {
+                    // end
+                    quizScoreEl.textContent = quizScore;
+                    scoresState.quiz = quizScore;
+                    updateScores();
+                    showModal('Quiz Selesai', `Nilai anda: ${quizScore} — selamat! 
+                    hidup merupakan sebuah pilihan seperti quiz quiz ini ingin menjadi lebih baik, menjadi orang orang baik, atau bahkan menjadi orang jahat.. kalo akusi bakal saranin kamu memilih menjadi orang baik 😁`);
+                    // disable further selection
+                    [...quizOptsEl.children].forEach(o => o.classList.add('locked'));
+                    quizBusy = true;
+                } else {
+                    quizBusy = false;
+                    renderQuizQuestion();
+                }
+            }, 1500);
+        }
+
+        quizStartBtn.addEventListener('click', () => {
+            quizIndex = 0;
+            quizScore = 0;
+            quizBusy = false;
+            quizScoreEl.textContent = quizScore;
+            renderQuizQuestion();
+        });
+
+        /* ---------------------------
+   TETRIS Implementation (simple) with line-clear animation & sounds
+--------------------------- */
+        const tCanvas = document.getElementById('tetrisCanvas');
+        const tCtx = tCanvas.getContext('2d');
+        const tNext = document.getElementById('tNext');
+        const tNextCtx = tNext.getContext('2d');
+        const tStartBtn = document.getElementById('tStart');
+        const tResetBtn = document.getElementById('tReset');
+
+        const tCols = 10,
+            tRows = 20;
+        const tCell = tCanvas.width / tCols;
+        let tBoard, tPiece, tNextPiece, tGameLoop = null,
+            tInterval = 600,
+            tScore = 0,
+            tRunning = false,
+            tDownPressed = false;
+
+        /* -------------------------------------------------
+           FIX #1 — Clear-line animation STATE improved
+        ------------------------------------------------- */
+        let tClearing = {
+            active: false,
+            rows: [],
+            start: 0,
+            duration: 350,
+            progress: 0
+        };
+
+        const TETROMINO = {
+            I: {
+                shape: [
+                    [1, 1, 1, 1]
+                ],
+                color: '#36c5ff'
+            },
+            J: {
+                shape: [
+                    [1, 0, 0],
+                    [1, 1, 1]
+                ],
+                color: '#2f9aff'
+            },
+            L: {
+                shape: [
+                    [0, 0, 1],
+                    [1, 1, 1]
+                ],
+                color: '#ffa23f'
+            },
+            O: {
+                shape: [
+                    [1, 1],
+                    [1, 1]
+                ],
+                color: '#ffd166'
+            },
+            S: {
+                shape: [
+                    [0, 1, 1],
+                    [1, 1, 0]
+                ],
+                color: '#74d66d'
+            },
+            T: {
+                shape: [
+                    [0, 1, 0],
+                    [1, 1, 1]
+                ],
+                color: '#b86bff'
+            },
+            Z: {
+                shape: [
+                    [1, 1, 0],
+                    [0, 1, 1]
+                ],
+                color: '#ff6b8a'
+            }
+        };
+        const tetKeys = Object.keys(TETROMINO);
+
+        /* -------------------------------------------------
+           Audio
+        ------------------------------------------------- */
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let tAudioCtx = null;
+
+        function ensureAudioCtx() {
+            if (!tAudioCtx) tAudioCtx = new AudioContext();
+        }
+
+        async function resumeAudioIfNeeded() {
+            try {
+                ensureAudioCtx();
+                if (tAudioCtx.state === 'suspended') {
+                    await tAudioCtx.resume();
+                }
+            } catch (err) {
+                // ignore
+            }
+        }
+
+        // Warm AudioContext to avoid cold-start delay
+        function warmAudio() {
+            try {
+                ensureAudioCtx();
+                const ctx = tAudioCtx;
+                // create a very short silent oscillator to warm up
+                const o = ctx.createOscillator();
+                const g = ctx.createGain();
+                g.gain.value = 0.00001;
+                o.connect(g);
+                g.connect(ctx.destination);
+                o.start();
+                o.stop(ctx.currentTime + 0.02);
+            } catch (e) {
+                // ignore
+            }
+        }
+
+        function playTone(freq, time = 0, duration = 0.20, type = 'sine', gain = 0.12) {
+            try {
+                ensureAudioCtx();
+                const ctx = tAudioCtx;
+                const o = ctx.createOscillator();
+                const g = ctx.createGain();
+                o.type = type;
+                o.frequency.value = freq;
+                g.gain.value = 0;
+                o.connect(g);
+                g.connect(ctx.destination);
+                const start = ctx.currentTime + time;
+                o.start(start);
+                // quick attack
+                g.gain.linearRampToValueAtTime(gain, start + 0.01);
+                // release
+                g.gain.linearRampToValueAtTime(0.0001, start + duration);
+                o.stop(start + duration + 0.02);
+            } catch (err) {
+                // silent fail
+            }
+        }
+
+        function playTetrisClearSound(lines) {
+            // Audio already resumed & warmed earlier (no resume call here to avoid extra latency)
+            if (lines === 1) {
+                playTone(800);
+            } else if (lines === 2) {
+                playTone(800);
+                playTone(920, 0.07);
+            } else if (lines === 3) {
+                playTone(900);
+                playTone(700, 0.08);
+                playTone(800, 0.12);
+                playTone(1300, 0.28, 0.12);
+            } else {
+                // 4+ or fallback
+                playTone(800);
+                playTone(1000, 0.02, 0.22, 'sawtooth');
+            }
+        }
+
+        function playGameOverSound() {
+            // play directly; assume audio resumed & warmed
+            playTone(520, 0, 0.4, 'sawtooth');
+            playTone(420, 0.08, 0.44, 'sawtooth');
+            playTone(320, 0.16, 0.5, 'sawtooth');
+        }
+
+        /* -------------------------------------------------
+           Setup
+        ------------------------------------------------- */
+        function tInit() {
+            tBoard = Array.from({
+                length: tRows
+            }, () => Array(tCols).fill(0));
+            tScore = 0;
+            updateTScore();
+            tPiece = tCreatePiece();
+            tNextPiece = tCreatePiece();
+            drawTNext();
+            drawBoard();
+        }
+
+        function tCreatePiece() {
+            const k = tetKeys[Math.floor(Math.random() * tetKeys.length)];
+            return {
+                type: k,
+                shape: TETROMINO[k].shape.map(r => r.slice()),
+                color: TETROMINO[k].color,
+                x: Math.floor((tCols - TETROMINO[k].shape[0].length) / 2),
+                y: 0
+            };
+        }
+
+        function tRotate(shape) {
+            const h = shape.length,
+                w = shape[0].length;
+            const res = Array.from({
+                length: w
+            }, () => Array(h).fill(0));
+            for (let r = 0; r < h; r++)
+                for (let c = 0; c < w; c++)
+                    res[c][h - 1 - r] = shape[r][c];
+            return res;
+        }
+
+        function tCollide(piece, nx = piece.x, ny = piece.y, nshape = piece.shape) {
+            for (let r = 0; r < nshape.length; r++) {
+                for (let c = 0; c < nshape[r].length; c++) {
+                    if (!nshape[r][c]) continue;
+                    let x = nx + c,
+                        y = ny + r;
+                    if (x < 0 || x >= tCols || y >= tRows) return true;
+                    if (y >= 0 && tBoard[y][x]) return true;
+                }
+            }
+            return false;
+        }
+
+        /* -------------------------------------------------
+           PLACEMENT + CLEAR ANIMATION
+        ------------------------------------------------- */
+        function tPlace(piece) {
+            for (let r = 0; r < piece.shape.length; r++)
+                for (let c = 0; c < piece.shape[r].length; c++)
+                    if (piece.shape[r][c] && piece.y + r >= 0)
+                        tBoard[piece.y + r][piece.x + c] = piece.color;
+
+            const fullRows = [];
+            for (let r = tRows - 1; r >= 0; r--)
+                if (tBoard[r].every(cell => cell)) fullRows.push(r);
+
+            if (fullRows.length > 0) {
+                tClearing.active = true;
+                tClearing.rows = fullRows.slice();
+                tClearing.start = performance.now();
+                tClearing.progress = 0;
+
+                if (tGameLoop) {
+                    clearInterval(tGameLoop);
+                    tGameLoop = null;
+                }
+                requestAnimationFrame(animateClearLoop);
+            } else {
+                gotoNextPiece();
+            }
+        }
+
+        function animateClearLoop(now) {
+            const e = now - tClearing.start;
+            tClearing.progress = Math.min(1, e / tClearing.duration);
+
+            drawBoard();
+
+            if (tClearing.progress < 1) {
+                requestAnimationFrame(animateClearLoop);
+            } else {
+                const rows = tClearing.rows.slice().sort((a, b) => b - a);
+                for (let rr of rows) {
+                    tBoard.splice(rr, 1);
+                    tBoard.unshift(Array(tCols).fill(0));
+                }
+                const lines = rows.length;
+
+                tScore += lines * 100;
+                updateTScore();
+
+                // play sound directly — AudioContext should already be resumed & warmed.
+                playTetrisClearSound(lines);
+
+                tClearing.active = false;
+                tClearing.rows = [];
+
+                gotoNextPiece();
+            }
+        }
+
+        /* -------------------------------------------------
+           FIX #2 — Safe next-piece switching
+        ------------------------------------------------- */
+        function gotoNextPiece() {
+            tPiece = tNextPiece;
+            tNextPiece = tCreatePiece();
+            drawTNext();
+
+            if (tCollide(tPiece)) {
+                // play game over sound directly (audio warmed earlier)
+                playGameOverSound();
+                tStop();
+                showModal('Game Over', 'Hidup seperti kepingan puzzle yang harus dijalani dan disusun dengan baik. Kekalahan dan kesalahan adalah awal dari sebuah proses menuju dewasa... "Kadang, hidup akan menghantarmu ke tempat yang paling gelap, bukan untuk menghancurkanmu, tetapi untuk mengajarkanmu bagaimana kamu bisa bersinar lebih terang. Jangan takut pada kegelapan, karena itu adalah bagian dari perjalanan menuju cahaya yang lebih besar." ');
+                return;
+            }
+
+            if (tRunning) {
+                if (tGameLoop) clearInterval(tGameLoop);
+                tGameLoop = setInterval(tDrop, tInterval);
+            }
+            drawBoard();
+        }
+
+        /* -------------------------------------------------
+           DROP
+        ------------------------------------------------- */
+        function tDrop() {
+            if (!tRunning) return;
+            if (tClearing.active) return;
+
+            if (!tCollide(tPiece, tPiece.x, tPiece.y + 1)) tPiece.y++;
+            else tPlace(tPiece);
+
+            drawBoard();
+        }
+
+        /* -------------------------------------------------
+           FIX #3 — Improved drawBoard() no flicker / no ghosting
+        ------------------------------------------------- */
+        function drawBoard() {
+            tCtx.clearRect(0, 0, tCanvas.width, tCanvas.height);
+
+            for (let r = 0; r < tRows; r++) {
+                for (let c = 0; c < tCols; c++) {
+                    let cell = tBoard[r][c];
+                    if (cell) {
+                        let alpha = 1;
+                        if (tClearing.active && tClearing.rows.includes(r)) {
+                            const p = tClearing.progress;
+                            const pulse = Math.abs(Math.sin(p * Math.PI * 3));
+                            alpha = Math.max(0, 1 - p) * (0.4 + 0.6 * pulse);
+                        }
+                        tDrawCell(c, r, cell, alpha);
+                    } else {
+                        tCtx.fillStyle = 'rgba(255,255,255,0.02)';
+                        tCtx.fillRect(c * tCell, r * tCell, tCell, tCell);
+                    }
+                }
+            }
+
+            if (tPiece) {
+                for (let r = 0; r < tPiece.shape.length; r++)
+                    for (let c = 0; c < tPiece.shape[r].length; c++)
+                        if (tPiece.shape[r][c])
+                            tDrawCell(tPiece.x + c, tPiece.y + r, tPiece.color, 1);
+            }
+        }
+
+        /* -------------------------------------------------
+           FIX #4 — Better Cell Rendering
+        ------------------------------------------------- */
+        function tDrawCell(col, row, color, alpha = 1) {
+            tCtx.save();
+            tCtx.globalAlpha = alpha;
+            tCtx.fillStyle = color;
+            tCtx.fillRect(col * tCell + 1, row * tCell + 1, tCell - 2, tCell - 2);
+            tCtx.restore();
+        }
+
+        /* -------------------------------------------------
+           NEXT PIECE DRAW
+        ------------------------------------------------- */
+        function drawTNext() {
+            tNextCtx.clearRect(0, 0, tNext.width, tNext.height);
+            const s = tNextPiece.shape;
+            const cell = tNext.width / 4;
+
+            for (let r = 0; r < s.length; r++)
+                for (let c = 0; c < s[r].length; c++)
+                    if (s[r][c]) {
+                        tNextCtx.fillStyle = tNextPiece.color;
+                        tNextCtx.fillRect(c * cell + 6, r * cell + 6, cell - 12, cell - 12);
+                    }
+        }
+
+        /* -------------------------------------------------
+           START / STOP / RESET
+        ------------------------------------------------- */
+        function tStart() {
+            if (tRunning) return;
+            tRunning = true;
+
+            // NOTE: resumeAudioIfNeeded + warmAudio are called in the Start button handler
+            tGameLoop = setInterval(tDrop, tInterval);
+        }
+
+        function tStop() {
+            tRunning = false;
+            if (tGameLoop) {
+                clearInterval(tGameLoop);
+                tGameLoop = null;
+            }
+        }
+
+        function tReset() {
+            tStop();
+            tInit();
+        }
+
+        function updateTScore() {
+            document.getElementById('tetrisScore').textContent = tScore;
+            scoresState.tetris = tScore;
+            updateScores();
+        }
+
+        /* -------------------------------------------------
+           BUTTONS
+        ------------------------------------------------- */
+        // Start button: ensure audio resumed & warmed BEFORE starting game
+        tStartBtn.addEventListener('click', async() => {
+            await resumeAudioIfNeeded();
+            warmAudio();
+            tStart();
+        });
+
+        tResetBtn.addEventListener('click', () => tReset());
+
+        document.getElementById('tLeft').addEventListener('click', () => {
+            if (tClearing.active) return;
+            if (!tCollide(tPiece, tPiece.x - 1)) tPiece.x--;
+            drawBoard();
+        });
+        document.getElementById('tRight').addEventListener('click', () => {
+            if (tClearing.active) return;
+            if (!tCollide(tPiece, tPiece.x + 1)) tPiece.x++;
+            drawBoard();
+        });
+        document.getElementById('tRotate').addEventListener('click', () => {
+            if (tClearing.active) return;
+            const r = tRotate(tPiece.shape);
+            if (!tCollide(tPiece, tPiece.x, tPiece.y, r)) tPiece.shape = r;
+            drawBoard();
+        });
+
+        document.getElementById('tDown').addEventListener('mousedown', () => {
+            if (tClearing.active) return;
+            tDownPressed = true;
+            if (tRunning) {
+                clearInterval(tGameLoop);
+                tGameLoop = setInterval(tDrop, 50);
+            }
+        });
+        document.getElementById('tDown').addEventListener('mouseup', () => {
+            tDownPressed = false;
+            if (tClearing.active) return;
+            if (tRunning) {
+                clearInterval(tGameLoop);
+                tGameLoop = setInterval(tDrop, tInterval);
+            }
+        });
+
+        document.getElementById('tDown').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            document.getElementById('tDown').dispatchEvent(new Event('mousedown'));
+        }, {
+            passive: false
+        });
+        document.getElementById('tDown').addEventListener('touchend', () => {
+            document.getElementById('tDown').dispatchEvent(new Event('mouseup'));
+        });
+
+        /* -------------------------------------------------
+           KEYBOARD
+        ------------------------------------------------- */
+        window.addEventListener('keydown', (e) => {
+            if (activeGame !== 'tetris') return;
+            if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key))
+                e.preventDefault();
+            if (tClearing.active) return;
+
+            // keep this to ensure audio resumes if user uses keyboard first
+            resumeAudioIfNeeded().catch(() => {});
+
+            if (e.key === 'ArrowLeft') {
+                if (!tCollide(tPiece, tPiece.x - 1)) tPiece.x--;
+                drawBoard();
+            }
+            if (e.key === 'ArrowRight') {
+                if (!tCollide(tPiece, tPiece.x + 1)) tPiece.x++;
+                drawBoard();
+            }
+            if (e.key === 'ArrowUp') {
+                const r = tRotate(tPiece.shape);
+                if (!tCollide(tPiece, tPiece.x, tPiece.y, r)) tPiece.shape = r;
+                drawBoard();
+            }
+            if (e.key === 'ArrowDown') {
+                if (!tCollide(tPiece, tPiece.x, tPiece.y + 1)) tPiece.y++;
+                drawBoard();
+            }
+        });
+
+        // ensure we can resume audio on first user pointer interaction (covers clicks/touches anywhere)
+        // and warm the audio so subsequent sounds (line clear) are instantaneous
+        document.addEventListener('pointerdown', function once() {
+            resumeAudioIfNeeded().then(() => warmAudio()).catch(() => {});
+            document.removeEventListener('pointerdown', once);
+        });
+
+        tInit();
+
+
+
+
+
+        /* ---------------------------
+           SNAKE Implementation
+        --------------------------- */
+        const sCanvas = document.getElementById('snakeCanvas');
+        const sCtx = sCanvas.getContext('2d');
+        const sCols = 20,
+            sCell = sCanvas.width / sCols;
+        let snake, dir, food, sLoop = null,
+            sScore = 0,
+            sRunning = false;
+
+        function sInit() {
+            snake = [{
+                x: 10,
+                y: 10
+            }, {
+                x: 9,
+                y: 10
+            }, {
+                x: 8,
+                y: 10
+            }];
+            dir = {
+                x: 1,
+                y: 0
+            };
+            sPlaceFood();
+            sScore = 0;
+            updateSnakeScore();
+            drawSnake();
+        }
+
+        function sPlaceFood() {
+            while (true) {
+                const x = Math.floor(Math.random() * sCols);
+                const y = Math.floor(Math.random() * sCols);
+                if (!snake.some(p => p.x === x && p.y === y)) {
+                    food = {
+                        x,
+                        y
+                    };
+                    break;
+                }
+            }
+        }
+
+        function drawSnake() {
+            sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
+            // background grid
+            for (let i = 0; i < sCols; i++) {
+                for (let j = 0; j < sCols; j++) {
+                    sCtx.fillStyle = 'rgba(255,255,255,0.01)';
+                    sCtx.fillRect(i * sCell + 1, j * sCell + 1, sCell - 2, sCell - 2);
+                }
+            }
+            // food
+            sCtx.fillStyle = '#ff6b6b';
+            sCtx.fillRect(food.x * sCell + 2, food.y * sCell + 2, sCell - 4, sCell - 4);
+            // snake
+            for (let i = 0; i < snake.length; i++) {
+                sCtx.fillStyle = i === 0 ? '#ffd166' : '#ffd166cc';
+                sCtx.fillRect(snake[i].x * sCell + 2, snake[i].y * sCell + 2, sCell - 4, sCell - 4);
+            }
+        }
+
+        function sStep() {
+            const head = {
+                x: snake[0].x + dir.x,
+                y: snake[0].y + dir.y
+            };
+            // collisions
+            if (head.x < 0 || head.x >= sCols || head.y < 0 || head.y >= sCols || snake.some(p => p.x === head.x && p.y === head.y)) {
+                sStop();
+                showModal('Game Over', 'Hidup terkadang memang tidak adil ada saja hal-hal tak terduga disetiap perjalanannya...kamu harus tumbuh lebih kuat dari masa lalu , kemarin , bahkan hari ini. Apa yang terjadi di masa yang sudah lewat tidak bisa diubah hanya dapat diterima dan mungkin menjadi suatu hal yang tidak baik. Setiap langkah yang terasa berat, setiap rintangan yang tampaknya tak teratasi, adalah bagian dari proses untuk mengukir kekuatan yang tak terduga dalam dirimu. Tidak ada kekalahan, hanya pelajaran yang membentuk jiwa yang lebih bijaksana dan tangguh');
+                return;
+            }
+            snake.unshift(head);
+            if (head.x === food.x && head.y === food.y) {
+                sScore += 10;
+                updateSnakeScore();
+                sPlaceFood();
+                if (sScore >= 200) {
+                    sStop();
+                    showModal('Keren!', 'Snake: Kamu menang! 🎉');
+                }
+            } else {
+                snake.pop();
+            }
+            drawSnake();
+        }
+
+        function sStart() {
+            if (sRunning) return;
+            sRunning = true;
+            preventKeys = true;
+            preventTouch = true;
+            sLoop = setInterval(sStep, 120);
+        }
+
+        function sStop() {
+            sRunning = false;
+            preventKeys = false;
+            preventTouch = false;
+            clearInterval(sLoop);
+            sLoop = null;
+        }
+
+        function sReset() {
+            sStop();
+            sInit();
+        }
+
+        function updateSnakeScore() {
+            document.getElementById('snakeScore').textContent = sScore;
+            scoresState.snake = sScore;
+            updateScores();
+        }
+
+        document.getElementById('sStart').addEventListener('click', () => sStart());
+        document.getElementById('sReset').addEventListener('click', () => sReset());
+        document.getElementById('sUp').addEventListener('click', () => {
+            if (dir.y === 1) return;
+            dir = {
+                x: 0,
+                y: -1
+            };
+        });
+        document.getElementById('sDown').addEventListener('click', () => {
+            if (dir.y === -1) return;
+            dir = {
+                x: 0,
+                y: 1
+            };
+        });
+        document.getElementById('sLeft').addEventListener('click', () => {
+            if (dir.x === 1) return;
+            dir = {
+                x: -1,
+                y: 0
+            };
+        });
+        document.getElementById('sRight').addEventListener('click', () => {
+            if (dir.x === -1) return;
+            dir = {
+                x: 1,
+                y: 0
+            };
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (activeGame !== 'snake') return;
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
+            if (e.key === 'ArrowUp' && dir.y !== 1) dir = {
+                x: 0,
+                y: -1
+            };
+            if (e.key === 'ArrowDown' && dir.y !== -1) dir = {
+                x: 0,
+                y: 1
+            };
+            if (e.key === 'ArrowLeft' && dir.x !== 1) dir = {
+                x: -1,
+                y: 0
+            };
+            if (e.key === 'ArrowRight' && dir.x !== -1) dir = {
+                x: 1,
+                y: 0
+            };
+        });
+
+        sInit();
+
+        /* ---------------------------
+          Flappy Implementation (ADDED) - MODIFIED
+        --------------------------- */
+        const fCanvas = document.getElementById('flappyCanvas');
+        const fCtx = fCanvas.getContext('2d');
+        const fResetBtn = document.getElementById('fReset');
+        const flapBtn = document.getElementById('flapBtn');
+        const fScoreEl = document.getElementById('flappyScore');
+
+        let fW = fCanvas.width,
+            fH = fCanvas.height;
+        let bird = null;
+        let pipes = [];
+        let fLoop = null;
+        let fRunning = false;
+        let fFrame = 0;
+        let fScore = 0;
+
+        // TUNED gravity & jump for lighter fall
+        const F_G = 0.35; // gravity (reduced)
+        const F_JUMP = -6; // jump velocity (less strong than -9)
+        const TERMINAL_VY = 8; // cap fall speed
+        const PIPE_GAP = 140;
+        const PIPE_W = 60;
+        const PIPE_INTERVAL = 130; // frames (bigger interval => easier)
+
+        // WebAudio simple beeps
+        const audioCtx = window.AudioContext ? new window.AudioContext() : null;
+
+        function playTone(freq, time = 0.08, type = 'sine', vol = 0.06) {
+            if (!audioCtx) return;
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.type = type;
+            o.frequency.value = freq;
+            g.gain.value = vol;
+            o.connect(g);
+            g.connect(audioCtx.destination);
+            o.start();
+            o.stop(audioCtx.currentTime + time);
+        }
+
+        // more expressive pass sound (two short tones)
+        function playPassSound() {
+            if (!audioCtx) return;
+            playTone(900, 0.06, 'square', 0.08);
+            setTimeout(() => playTone(1200, 0.04, 'sine', 0.06), 70);
+        }
+
+        // nicer game over melody
+        function playGameOverSound() {
+            if (!audioCtx) return;
+            playTone(220, 0.12, 'sawtooth', 0.08);
+            setTimeout(() => playTone(180, 0.12, 'sawtooth', 0.08), 140);
+            setTimeout(() => playTone(120, 0.16, 'sine', 0.06), 320);
+        }
+
+        // initialize flappy
+        function fInit() {
+            fW = fCanvas.width;
+            fH = fCanvas.height;
+            bird = {
+                x: 80,
+                y: fH / 2,
+                r: 14,
+                vy: 0
+            };
+            pipes = [];
+            fFrame = 0;
+            fScore = 0;
+            updateFlappyScore();
+            drawFlappy();
+        }
+
+        function spawnPipe() {
+            const top = 50 + Math.random() * (fH - 200 - PIPE_GAP);
+            pipes.push({
+                x: fW + 20,
+                top: top,
+                passed: false
+            });
+        }
+
+        function fStep() {
+            // physics
+            bird.vy += F_G;
+            // clamp to terminal velocity to avoid too-fast fall
+            bird.vy = Math.max(Math.min(bird.vy, TERMINAL_VY), -TERMINAL_VY);
+            bird.y += bird.vy;
+
+            // create pipes
+            if (fFrame % PIPE_INTERVAL === 0) {
+                spawnPipe();
+            }
+
+            // move pipes
+            for (let i = pipes.length - 1; i >= 0; i--) {
+                pipes[i].x -= 2.6;
+                // check pass for score
+                if (!pipes[i].passed && pipes[i].x + PIPE_W < bird.x - bird.r) {
+                    pipes[i].passed = true;
+                    fScore += 1;
+                    updateFlappyScore();
+                    // play pass sound
+                    playPassSound();
+                }
+                // remove offscreen
+                if (pipes[i].x + PIPE_W < -50) pipes.splice(i, 1);
+            }
+
+            // collisions
+            if (bird.y + bird.r >= fH || bird.y - bird.r <= 0) {
+                fGameOver();
+            }
+            for (const p of pipes) {
+                // top pipe rect
+                if (rectCircleCollide(p.x, 0, PIPE_W, p.top, bird.x, bird.y, bird.r)) {
+                    fGameOver();
+                    break;
+                }
+                // bottom pipe rect
+                if (rectCircleCollide(p.x, p.top + PIPE_GAP, PIPE_W, fH - (p.top + PIPE_GAP), bird.x, bird.y, bird.r)) {
+                    fGameOver();
+                    break;
+                }
+            }
+
+            fFrame++;
+            drawFlappy();
+        }
+
+        function rectCircleCollide(rx, ry, rw, rh, cx, cy, cr) {
+            const closestX = Math.max(rx, Math.min(cx, rx + rw));
+            const closestY = Math.max(ry, Math.min(cy, ry + rh));
+            const dx = cx - closestX;
+            const dy = cy - closestY;
+            return (dx * dx + dy * dy) < cr * cr;
+        }
+
+        function drawFlappy() {
+            // background
+            fCtx.clearRect(0, 0, fW, fH);
+            fCtx.fillStyle = 'rgba(255,255,255,0.02)';
+            fCtx.fillRect(0, 0, fW, fH);
+
+            // draw pipes
+            for (const p of pipes) {
+                // top
+                fCtx.fillStyle = '#3aa35a';
+                fCtx.fillRect(p.x, 0, PIPE_W, p.top);
+                // bottom
+                fCtx.fillRect(p.x, p.top + PIPE_GAP, PIPE_W, fH - (p.top + PIPE_GAP));
+                // pipe cap
+                fCtx.fillStyle = '#2d8e49';
+                fCtx.fillRect(p.x, p.top - 8, PIPE_W, 8);
+                fCtx.fillRect(p.x, p.top + PIPE_GAP, PIPE_W, 8);
+            }
+
+            // bird
+            fCtx.save();
+            fCtx.translate(bird.x, bird.y);
+            fCtx.rotate(Math.max(-0.6, Math.min(0.6, bird.vy / 10)));
+            // body
+            fCtx.fillStyle = '#ffd166';
+            fCtx.beginPath();
+            fCtx.arc(0, 0, bird.r, 0, Math.PI * 2);
+            fCtx.fill();
+            // eye
+            fCtx.fillStyle = '#222';
+            fCtx.beginPath();
+            fCtx.arc(6, -4, 3, 0, Math.PI * 2);
+            fCtx.fill();
+            // wing
+            fCtx.fillStyle = '#ffb84d';
+            fCtx.beginPath();
+            fCtx.ellipse(-4, 6, 8, 4, Math.sin(Date.now() / 150) * 0.6, 0, Math.PI * 2);
+            fCtx.fill();
+            fCtx.restore();
+
+            // score display small
+            fCtx.fillStyle = 'rgba(255,255,255,0.6)';
+            fCtx.font = '20px Inter, Arial';
+            fCtx.fillText(`Score: ${fScore}`, 12, 28);
+        }
+
+        function fStart() {
+            if (fRunning) return;
+            fRunning = true;
+            preventKeys = true;
+            preventTouch = true;
+            // resume audio context if suspended
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            if (!fLoop) {
+                fLoop = setInterval(fStep, 1000 / 60);
+            }
+        }
+
+        function fStop() {
+            fRunning = false;
+            preventKeys = false;
+            preventTouch = false;
+            if (fLoop) {
+                clearInterval(fLoop);
+                fLoop = null;
+            }
+        }
+
+        function fReset() {
+            fStop();
+            fInit();
+        }
+
+        function fJump() {
+            // jump and cap velocity upward as well
+            bird.vy = F_JUMP;
+            // small jump sound
+            playTone(1200, 0.05, 'sine', 0.06);
+        }
+
+        function fGameOver() {
+            if (!fRunning) return;
+            fStop();
+            // play game over melody
+            playGameOverSound();
+            // update aggregated score
+            scoresState.flappy = fScore;
+            updateScores();
+            // show modal with sweet words
+            showModal('Game Over', `Skormu: ${fScore} — Hidup sama seperti game ini terkadang kita sangat mudah terjatuh, terluka bahkan mungkin tersesat tetapi lihat bagaimana caranya dia bangkit dan terus menerus melewati rintangan yang ada didepannya.. dikehidupan ini mungkin kita mendapatkan atau menjadi sesuatu yang kurang baik bahkan yang tidak kita inginkan tetapi hanya satu hal yang harus diingat yaitu menjadi baik dan lebih baik lagi setiap harinya untuk diri sendiri dan orang orang disekitar. Aku bangga padamu 💖`);
+            // update flappy score text
+            updateFlappyScore();
+        }
+
+        function updateFlappyScore() {
+            fScoreEl.textContent = fScore;
+            scoresState.flappy = fScore;
+            updateScores();
+        }
+
+        // UI bindings
+        fResetBtn.addEventListener('click', () => {
+            fReset();
+        });
+
+        // Use pointerdown for single, unified press (mouse/touch/pen) — prevents double events
+        flapBtn.addEventListener('pointerdown', (e) => {
+            // ensure event doesn't produce default UI side-effects on touch
+            if (e.cancelable) e.preventDefault();
+
+            // If game not running, start then perform one jump shortly after
+            if (!fRunning) {
+                fStart();
+                // slight delay to ensure loop started
+                setTimeout(() => fJump(), 20);
+            } else {
+                // single jump per pointerdown
+                fJump();
+            }
+        }, {
+            passive: false
+        });
+
+        // Keyboard: Space triggers a single jump per press (ignore auto-repeat)
+        window.addEventListener('keydown', (e) => {
+            if (activeGame === 'flappy' && (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Space')) {
+                if (e.repeat) return; // ignore key auto-repeat
+                e.preventDefault();
+                if (!fRunning) {
+                    fStart();
+                    setTimeout(() => fJump(), 20);
+                } else {
+                    fJump();
+                }
+            }
+        });
+
+        /* initialize flappy */
+        fInit();
+
+        /* ---------------------------
+          Small helper functions
+        --------------------------- */
+        function shuffle(a) {
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+        }
+
+        /* quick toast inside modal area (temporary) */
+        let toastTimer = null;
+
+        function showQuickToast(msg) {
+            const old = document.getElementById('confettiArea');
+            old.innerHTML = `<div class="muted-small">${msg}</div>`;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                old.innerHTML = '';
+            }, 1200);
+        }
+
+        /* ---------------------------
+          Spotify (simple integration)
+          - Because we can't use Spotify Web API easily without tokens,
+            we'll load the provided URL into embedded iframe or attempt
+            to fetch a preview audio (not possible). Instead we open Spotify
+            URL in new tab and show a sample audio placeholder.
+        --------------------------- */
+        const spotifyURL = 'https://open.spotify.com/album/30bswn7xJacx7UtrjhRhmu?si=6tyoryqjT92XCPWvvavEtw';
+        document.getElementById('openSpotify').addEventListener('click', () => window.open(spotifyURL, '_blank'));
+        document.getElementById('playSpotify').addEventListener('click', () => {
+            // We'll show embedded Spotify widget (iframe) - note: may be blocked by CORS in some contexts, but works in many browsers
+            // To keep it simple, toggle audioPlayerWrapper and load Spotify embed URL
+            const wrapper = document.getElementById('audioPlayerWrapper');
+            if (wrapper.style.display === 'none' || wrapper.style.display === '') {
+                wrapper.style.display = 'block';
+                // create iframe if not exists
+                if (!document.getElementById('spotifyFrame')) {
+                    const iframe = document.createElement('iframe');
+                    iframe.id = 'spotifyFrame';
+                    iframe.src = spotifyURL.replace('open.spotify.com', 'open.spotify.com/embed');
+                    iframe.width = '100%';
+                    iframe.height = '80';
+                    iframe.frameBorder = '0';
+                    iframe.allow = 'encrypted-media';
+                    document.getElementById('audioPlayerWrapper').innerHTML = '';
+                    document.getElementById('audioPlayerWrapper').appendChild(iframe);
+                }
+            } else {
+                wrapper.style.display = 'none';
+            }
+        });
+
+        /* ---------------------------
+          Recorder (MediaRecorder)
+        --------------------------- */
+        let mediaStream = null,
+            mediaRec = null,
+            recChunks = [],
+            recURL = null;
+        const recBtn = document.getElementById('recBtn');
+        const stopRecBtn = document.getElementById('stopRecBtn');
+        const playRecBtn = document.getElementById('playRecBtn');
+        const recStatus = document.getElementById('recStatus');
+        const recordings = document.getElementById('recordings');
+
+        recBtn.addEventListener('click', async() => {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert('Perekam tidak didukung pada browser ini.');
+                return;
+            }
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({
+                    audio: true
+                });
+                mediaRec = new MediaRecorder(mediaStream);
+                recChunks = [];
+                mediaRec.ondataavailable = e => recChunks.push(e.data);
+                mediaRec.onstop = () => {
+                    const blob = new Blob(recChunks, {
+                        type: 'audio/webm'
+                    });
+                    recURL = URL.createObjectURL(blob);
+                    const au = document.createElement('audio');
+                    au.controls = true;
+                    au.src = recURL;
+                    au.style.width = '100%';
+                    recordings.innerHTML = '';
+                    recordings.appendChild(au);
+                    playRecBtn.disabled = false;
+                    recStatus.textContent = 'Selesai merekam';
+                };
+                mediaRec.start();
+                recStatus.textContent = 'Merekam...';
+                recBtn.disabled = true;
+                stopRecBtn.disabled = false;
+            } catch (e) {
+                alert('Izin microphone diperlukan.');
+            }
+        });
+        stopRecBtn.addEventListener('click', () => {
+            if (mediaRec && mediaRec.state !== 'inactive') mediaRec.stop();
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(t => t.stop());
+                mediaStream = null;
+            }
+            recBtn.disabled = false;
+            stopRecBtn.disabled = true;
+        });
+        playRecBtn.addEventListener('click', () => {
+            if (recURL) {
+                const a = new Audio(recURL);
+                a.play();
+            }
+        });
+
+        /* ---------------------------
+          Misc: modal messages after game end (used already)
+        --------------------------- */
+
+        /* Initialize some UI states */
+        document.getElementById('audioPlayerWrapper').style.display = 'none';
+
+        /* EXTRAS: make sure when tetris or snake playing, arrow keys don't scroll page.
+           We already set preventKeys/preventTouch flags accordingly when starting/stopping games.
+        */
+
+        /* Safety/UX: If user switches panels while games running, stop them to avoid conflicts */
+        gameListEls.forEach(el => {
+            el.addEventListener('click', () => {
+                // stop passive games
+                tStop();
+                sStop();
+                fStop();
+            });
+        });
+
+        /* Make touch controls for tetris (drag left/right) optional: simple tap handlers already exist above */
+
+        /* initial draw consistency */
+        drawBoard();
+        drawTNext();
+        drawSnake();
+        drawFlappy();
+    </script>
+</body>
+
+</html>
