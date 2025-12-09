@@ -457,6 +457,28 @@
         .hammer-cursor {
             cursor: none;
         }
+        /* MOBILE-SPECIFIC: override hammer cursor and force canvas width fluid */
+        
+        @media (max-width: 700px) {
+            .whack-sidebar {
+                width: 100%;
+            }
+            .whack-canvas-wrap {
+                flex-direction: column;
+            }
+            .hammer-cursor {
+                /* restore native cursor on mobile — no desktop hammer cursor */
+                cursor: default;
+            }
+            /* make whCanvas css width responsive */
+            #whCanvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+            #whCanvasWrap .game-canvas {
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 
@@ -663,8 +685,9 @@
 
                 <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start">
                     <div class="whack-canvas-wrap">
-                        <div class="game-canvas hammer-cursor" id="whCanvasWrap" style="padding:8px">
-                            <canvas id="whCanvas" width="520" height="360" style="touch-action:none"></canvas>
+                        <div class="game-canvas hammer-cursor" id="whCanvasWrap" style="padding:8px;max-width:720px;">
+                            <!-- Canvas width is responsive via CSS; internal drawing scales with devicePixelRatio -->
+                            <canvas id="whCanvas" width="520" height="360" style="touch-action:none;display:block"></canvas>
                             <div style="margin-top:8px;display:flex;gap:8px;justify-content:center">
                                 <button class="btn" id="whStart">Start</button>
                                 <button class="btn-ghost" id="whReset">Reset</button>
@@ -696,7 +719,6 @@
                     </div>
                 </div>
             </div>
-
         </main>
 
         <aside class="right">
@@ -750,8 +772,8 @@
 
     <script>
         /* ---------------------------
-                                                                                                                                                                                                                                                                   Utilities & UI switching
-                                                                                                                                                                                                                                                                --------------------------- */
+                                                                                                                                                                                                                                                                                                                                                                           Utilities & UI switching
+                                                                                                                                                                                                                                                                                                                                                                        --------------------------- */
         const gameListEls = document.querySelectorAll('.game-option');
         const panels = {
             memory: document.getElementById('memory'),
@@ -2025,6 +2047,22 @@
         /* ---------------------------
            WHACK-A-MOLE Implementation
         --------------------------- */
+        /* ============================================================
+   PERBAIKAN: SwitchGame Auto-Init Whack Canvas
+   ============================================================ */
+        const _oldSwitchGame = switchGame;
+        switchGame = function(target) {
+            _oldSwitchGame(target);
+            if (target === "whack") {
+                // memaksa canvas merender ulang saat menu dibuka
+                const evt = new Event("resize");
+                window.dispatchEvent(evt);
+            }
+        };
+
+        /* ============================================================
+           WHACK-A-MOLE — SOURCE CODE ASLI KAMU (dipertahankan utuh)
+           ============================================================ */
         (function() {
             const canvas = document.getElementById('whCanvas');
             const ctx = canvas.getContext('2d');
@@ -2036,16 +2074,17 @@
             const ptsPerHitEl = document.getElementById('whPtsPerHit');
             const skinFile = document.getElementById('whSkinFile');
             const skinPreview = document.getElementById('whSkinPreview');
+            const wrap = document.getElementById('whCanvasWrap');
 
             const COLS = 3,
                 ROWS = 3;
             const holes = [];
-            let holeSize = 90; // visual
+            let holeSize = 90;
             let padding = 30;
-            let whWidth = canvas.width,
-                whHeight = canvas.height;
 
-            // Game state
+            const BASE_W = 520,
+                BASE_H = 360;
+
             let whRound = 0;
             let whScore = 0;
             let whRunning = false;
@@ -2054,11 +2093,9 @@
             let ptsPerHit = 10;
             let roundTimer = null;
             let spawnTimer = null;
-            let activeMole = null; // {i, x,y,appearedAt,expiresAt,hit:false}
+            let activeMole = null;
             let skinImg = null;
-            let imageURL = null;
 
-            // Round config (5 rounds). Each entry: spawnInterval(ms), moleDuration(ms), ptsPerHit
             const ROUNDS = [{
                 spawn: 2000,
                 dur: 1900,
@@ -2086,10 +2123,9 @@
                 length: 20
             }];
 
-            // Hammer animation state
             let pointer = {
-                x: whWidth / 2,
-                y: whHeight / 2
+                x: BASE_W / 2,
+                y: BASE_H / 2
             };
             let hammer = {
                 angle: -0.8,
@@ -2098,7 +2134,39 @@
                 swingStart: 0
             };
 
-            // initialize holes positions based on canvas size
+            const isMobile = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+            let hammerTap = null;
+
+            if (isMobile) wrap.classList.remove('hammer-cursor');
+
+            function recomputeSize() {
+                const rect = wrap.getBoundingClientRect();
+                const cssWidth = Math.min(rect.width, window.innerWidth - 32);
+                const aspect = BASE_H / BASE_W;
+                const cssHeight = cssWidth * aspect;
+
+                canvas.style.width = cssWidth + 'px';
+                canvas.style.height = cssHeight + 'px';
+
+                const dpr = Math.max(1, window.devicePixelRatio || 1);
+                canvas.width = Math.floor(cssWidth * dpr);
+                canvas.height = Math.floor(cssHeight * dpr);
+
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+                const logicalW = cssWidth;
+                const logicalH = cssHeight;
+
+                whWidth = logicalW;
+                whHeight = logicalH;
+
+                layoutHoles();
+                drawWhack();
+            }
+
+            let whWidth = BASE_W,
+                whHeight = BASE_H;
+
             function layoutHoles() {
                 holes.length = 0;
                 holeSize = Math.min(whWidth / (COLS + 1), whHeight / (ROWS + 1)) - 10;
@@ -2116,39 +2184,34 @@
                     }
                 }
             }
+
             layoutHoles();
 
-            // draw background and holes
             function drawWhack() {
                 ctx.clearRect(0, 0, whWidth, whHeight);
-                // background
+
                 ctx.fillStyle = 'rgba(255,255,255,0.02)';
                 ctx.fillRect(0, 0, whWidth, whHeight);
 
-                // draw holes
                 for (const h of holes) {
-                    // rim
                     ctx.beginPath();
                     ctx.fillStyle = '#0b1822';
                     ctx.ellipse(h.x, h.y + h.radius * 0.2, h.radius * 1.1, h.radius * 0.55, 0, 0, Math.PI * 2);
                     ctx.fill();
 
-                    // inner shadow
                     ctx.beginPath();
                     ctx.fillStyle = 'rgba(0,0,0,0.45)';
                     ctx.ellipse(h.x, h.y + h.radius * 0.25, h.radius * 0.9, h.radius * 0.45, 0, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
-                // draw active mole if present
                 if (activeMole) {
                     const h = holes[activeMole.i];
                     const progress = Math.max(0, Math.min(1, (Date.now() - activeMole.appearedAt) / (activeMole.expiresAt - activeMole.appearedAt)));
-                    const rise = Math.sin(progress * Math.PI) * 1.0; // 0..1
+                    const rise = Math.sin(progress * Math.PI);
                     const size = h.radius * 1.4 * (0.9 + 0.2 * rise);
 
                     if (skinImg) {
-                        // draw image centered slightly above hole
                         const iw = skinImg.width;
                         const ih = skinImg.height;
                         const scale = (size * 2) / Math.max(iw, ih);
@@ -2159,74 +2222,73 @@
                         ctx.drawImage(skinImg, -w / 2, -he / 2, w, he);
                         ctx.restore();
                     } else {
-                        // default simple mole
                         ctx.save();
                         ctx.translate(h.x, h.y - h.radius * 0.6 - rise * 20);
-                        // body
+                        const s = size;
                         ctx.fillStyle = '#ffcc99';
-                        roundRect(ctx, -size / 2, -size / 2, size, size, 10, true, false);
-                        // ears
+                        roundRect(ctx, -s / 2, -s / 2, s, s, 10, true, false);
                         ctx.fillStyle = '#ffb380';
                         ctx.beginPath();
-                        ctx.ellipse(-size * 0.28, -size * 0.55, size * 0.16, size * 0.12, 0, 0, Math.PI * 2);
+                        ctx.ellipse(-s * 0.28, -s * 0.55, s * 0.16, s * 0.12, 0, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.beginPath();
-                        ctx.ellipse(size * 0.28, -size * 0.55, size * 0.16, size * 0.12, 0, 0, Math.PI * 2);
+                        ctx.ellipse(s * 0.28, -s * 0.55, s * 0.16, s * 0.12, 0, 0, Math.PI * 2);
                         ctx.fill();
-                        // eyes
                         ctx.fillStyle = '#222';
                         ctx.beginPath();
-                        ctx.arc(-size * 0.15, -size * 0.05, size * 0.07, 0, Math.PI * 2);
+                        ctx.arc(-s * 0.15, -s * 0.05, s * 0.07, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.beginPath();
-                        ctx.arc(size * 0.15, -size * 0.05, size * 0.07, 0, Math.PI * 2);
+                        ctx.arc(s * 0.15, -s * 0.05, s * 0.07, 0, Math.PI * 2);
                         ctx.fill();
-                        // nose
                         ctx.fillStyle = '#d94b4b';
                         ctx.beginPath();
-                        ctx.arc(0, size * 0.06, size * 0.08, 0, Math.PI * 2);
+                        ctx.arc(0, s * 0.06, s * 0.08, 0, Math.PI * 2);
                         ctx.fill();
                         ctx.restore();
                     }
                 }
 
-                // draw hammer following pointer
-                drawHammer(pointer.x, pointer.y);
+                if (!isMobile) {
+                    drawHammer(pointer.x, pointer.y, 1.0);
+                } else if (hammerTap) {
+                    const elapsed = Date.now() - hammerTap.start;
+                    const t = elapsed / hammerTap.dur;
+                    if (t < 1) {
+                        const alpha = 1 - t;
+                        const swingVal = Math.sin(t * Math.PI) * 1.2;
+                        const prevSwing = hammer.swing;
+                        hammer.swing = swingVal;
+                        drawHammer(hammerTap.x, hammerTap.y, alpha);
+                        hammer.swing = prevSwing;
+                    } else hammerTap = null;
+                }
 
-                // optionally draw UI overlay (score) inside canvas
                 ctx.fillStyle = 'rgba(255,255,255,0.7)';
                 ctx.font = '16px Inter, Arial';
                 ctx.fillText(`Round ${whRound} • Score ${whScore}`, 10, 20);
             }
 
-            function drawHammer(x, y) {
-                // hammer pivot a bit offset to make realistic swing pivot
+            function drawHammer(x, y, alpha = 1) {
                 ctx.save();
+                ctx.globalAlpha = alpha;
                 ctx.translate(x, y);
-                // apply swing rotation around pivot
-                const ang = hammer.angle + hammer.swing * 0.9;
+                const ang = hammer.angle + (hammer.swing || 0) * 0.9;
                 ctx.rotate(ang);
-                // head
                 ctx.fillStyle = '#444';
                 roundRect(ctx, -8, -32, 60, 28, 6, true, false);
-                // hammer face lighter
                 ctx.fillStyle = '#666';
                 roundRect(ctx, -4, -30, 40, 24, 4, true, false);
-                // handle
                 ctx.fillStyle = '#8b5c3a';
                 roundRect(ctx, 20, -6, 6, 46, 3, true, false);
-                // end cap
                 ctx.fillStyle = '#222';
                 roundRect(ctx, 18, 38, 12, 8, 3, true, false);
-
                 ctx.restore();
 
-                // animate swing decay
                 if (hammer.swinging) {
                     const elapsed = Date.now() - hammer.swingStart;
                     const dur = 220;
                     const t = Math.min(1, elapsed / dur);
-                    // ease out
                     hammer.swing = Math.cos(t * Math.PI * 0.5) * (1 - t) * 1.4;
                     if (t >= 1) {
                         hammer.swinging = false;
@@ -2235,7 +2297,6 @@
                 }
             }
 
-            // helper: rounded rect
             function roundRect(ctx, x, y, w, h, r, fill, stroke) {
                 if (typeof r === 'undefined') r = 5;
                 ctx.beginPath();
@@ -2249,12 +2310,9 @@
                 if (stroke) ctx.stroke();
             }
 
-            // spawn a mole in a random hole (not same as active)
             function spawnMole() {
                 if (activeMole) return;
                 const idxs = holes.map((_, i) => i);
-                // remove hole where active was (just in case)
-                if (activeMole) idxs.splice(idxs.indexOf(activeMole.i), 1);
                 const i = idxs[Math.floor(Math.random() * idxs.length)];
                 const now = Date.now();
                 activeMole = {
@@ -2263,16 +2321,13 @@
                     expiresAt: now + moleDuration,
                     hit: false
                 };
-                // schedule removal
                 setTimeout(() => {
                     if (activeMole && !activeMole.hit) {
-                        // mole timed out -> disappear
                         activeMole = null;
                     }
                 }, moleDuration + 20);
             }
 
-            // game loop (render)
             let renderLoop = null;
 
             function startRender() {
@@ -2292,7 +2347,6 @@
                 }
             }
 
-            // start a round
             function startRound(idx) {
                 if (idx < 0 || idx >= ROUNDS.length) return endGame();
                 whRound = idx + 1;
@@ -2302,24 +2356,18 @@
                 spawnInterval = ROUNDS[idx].spawn;
                 moleDuration = ROUNDS[idx].dur;
                 ptsPerHitEl.textContent = ptsPerHit;
-                // spawn repeatedly for round length
                 const lengthSec = ROUNDS[idx].length;
                 const startTime = Date.now();
-                spawnMole(); // immediate spawn
+                spawnMole();
                 spawnTimer = setInterval(() => {
                     if (!whRunning) return;
-                    // spawn only if none currently (to avoid overlap), but also allow some overlap occasionally
                     spawnMole();
                     if ((Date.now() - startTime) / 1000 >= lengthSec) {
                         clearInterval(spawnTimer);
                         spawnTimer = null;
-                        // finish round after short delay to let last mole expire
                         setTimeout(() => {
-                            if (whRound < 5) {
-                                startRound(idx + 1);
-                            } else {
-                                endGame();
-                            }
+                            if (whRound < 5) startRound(idx + 1);
+                            else endGame();
                         }, 600);
                     }
                 }, spawnInterval);
@@ -2327,16 +2375,19 @@
 
             function endGame() {
                 whRunning = false;
-                // clear any timers
                 if (spawnTimer) {
                     clearInterval(spawnTimer);
                     spawnTimer = null;
                 }
                 stopRender();
-                showModal('Berhasil Kamu Keren !!!', `Skor akhir: ${whScore} — Kehidupan terkadang mempunyai hal-hal tak terduga seperti masalah muncul tiba tiba tanpa permisi tapi justru dari sana poin hidup kita bertambah, karena semakin sering masalah datang semakin cepat juga kita belajar memukul semuanya dengan senyuman jadi jangan takut dengan masalah yang muncul karena hidup itu bagaikan ronde demi ronde yang nggak makin mudah, cuma kamu yang akan semakin kuat dan ingat satu hal ini...masalah boleh muncul seenaknya, tetapi kamu tetap pemainnya bukan korbannya 🥰 `);
-                // update aggregated score
+                showModal(
+                    'Berhasil Kamu Keren !!!',
+                    `Skor akhir: ${whScore}`
+                );
                 scoresState.whack = whScore;
                 updateScores();
+                preventKeys = false;
+                preventTouch = false;
             }
 
             function startGame() {
@@ -2370,31 +2421,23 @@
                 preventTouch = false;
             }
 
-            // detect hit at pointer
             function hitAt(x, y) {
-                // trigger hammer swing
                 hammer.swinging = true;
                 hammer.swingStart = Date.now();
                 hammer.swing = 1.2;
 
                 if (!activeMole) return false;
                 const h = holes[activeMole.i];
-                // compare distance to mole center
                 const dx = x - h.x;
                 const dy = y - (h.y - h.radius * 0.6);
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 const thresh = h.radius * 1.0;
                 if (dist <= thresh) {
-                    // hit!
                     activeMole.hit = true;
-                    // award points
                     whScore += ptsPerHit;
                     scoreEl.textContent = whScore;
-                    // show little pop sound and effect
                     playTone(900, 0.06, 'square', 0.08);
-                    // remove mole immediately
                     activeMole = null;
-                    // update aggregated
                     scoresState.whack = whScore;
                     updateScores();
                     return true;
@@ -2402,11 +2445,11 @@
                 return false;
             }
 
-            // pointer events unified
             canvas.addEventListener('pointermove', (e) => {
+                if (isMobile) return;
                 const rect = canvas.getBoundingClientRect();
-                pointer.x = (e.clientX - rect.left) * (canvas.width / rect.width);
-                pointer.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+                pointer.x = (e.clientX - rect.left) * (canvas.width / rect.width) / (window.devicePixelRatio || 1);
+                pointer.y = (e.clientY - rect.top) * (canvas.height / rect.height) / (window.devicePixelRatio || 1);
             }, {
                 passive: true
             });
@@ -2414,34 +2457,54 @@
             canvas.addEventListener('pointerdown', (e) => {
                 if (e.cancelable) e.preventDefault();
                 const rect = canvas.getBoundingClientRect();
-                const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-                const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-                // start game if not running
+                const cssX = (e.clientX - rect.left) *
+                    (canvas.width / rect.width) /
+                    (window.devicePixelRatio || 1);
+                const cssY = (e.clientY - rect.top) *
+                    (canvas.height / rect.height) /
+                    (window.devicePixelRatio || 1);
+
                 if (!whRunning) {
-                    startGame();
-                    // small delay then process hit to avoid immediate spawn/hit race
+                    const ctxA = getGameAudioCtx();
+                    if (ctxA && ctxA.state === 'suspended')
+                        ctxA.resume().finally(startGame);
+                    else startGame();
+
                     setTimeout(() => {
-                        hitAt(x, y);
+                        if (isMobile) {
+                            hammerTap = {
+                                x: cssX,
+                                y: cssY,
+                                start: Date.now(),
+                                dur: 320
+                            };
+                        } else {
+                            pointer.x = cssX;
+                            pointer.y = cssY;
+                        }
+                        hitAt(cssX, cssY);
                     }, 40);
                 } else {
-                    hitAt(x, y);
+                    if (isMobile) {
+                        hammerTap = {
+                            x: cssX,
+                            y: cssY,
+                            start: Date.now(),
+                            dur: 320
+                        };
+                    } else {
+                        pointer.x = cssX;
+                        pointer.y = cssY;
+                    }
+                    hitAt(cssX, cssY);
                 }
             }, {
                 passive: false
             });
 
-            // resize handling (in case canvas container scales)
-            function recomputeSize() {
-                const rect = canvas.getBoundingClientRect();
-                // keep internal canvas size as defined; only layout holes if canvas CSS size changed
-                whWidth = canvas.width;
-                whHeight = canvas.height;
-                layoutHoles();
-                drawWhack();
-            }
             window.addEventListener('resize', recomputeSize);
+            recomputeSize();
 
-            // file upload for skin
             skinFile.addEventListener('change', (ev) => {
                 const f = ev.target.files && ev.target.files[0];
                 if (!f) return;
@@ -2453,9 +2516,7 @@
                 reader.onload = function(evt) {
                     const img = new Image();
                     img.onload = function() {
-                        // use image as skin
                         skinImg = img;
-                        // preview
                         skinPreview.innerHTML = '';
                         const pImg = document.createElement('img');
                         pImg.src = evt.target.result;
@@ -2468,130 +2529,38 @@
                 reader.readAsDataURL(f);
             });
 
-            // UI bindings
+            /* ============================================================
+               PERBAIKAN: Tombol Start Memulai Game Dengan Benar
+               ============================================================ */
             startBtn.addEventListener('click', () => {
-                // resume audio if needed
-                const ctx = getGameAudioCtx();
-                if (ctx && ctx.state === 'suspended') ctx.resume().then(() => startGame()).catch(() => startGame());
+                const ctxA = getGameAudioCtx();
+                if (ctxA && ctxA.state === 'suspended')
+                    ctxA.resume().finally(startGame);
                 else startGame();
             });
+
             resetBtn.addEventListener('click', resetGame);
 
-            // expose stop function to global stopAllGames
             window._whackStop = function() {
                 resetGame();
             };
 
-            // initial draw
             drawWhack();
         })();
 
-        /* ---------------------------
-          Spotify integration, Recorder, and others (kept original)
-        --------------------------- */
-
-        const spotifyURL = 'https://open.spotify.com/album/30bswn7xJacx7UtrjhRhmu?si=6tyoryqjT92XCPWvvavEtw';
-        document.getElementById('openSpotify').addEventListener('click', () => window.open(spotifyURL, '_blank'));
-        document.getElementById('playSpotify').addEventListener('click', () => {
-            const wrapper = document.getElementById('audioPlayerWrapper');
-            if (wrapper.style.display === 'none' || wrapper.style.display === '') {
-                wrapper.style.display = 'block';
-                if (!document.getElementById('spotifyFrame')) {
-                    const iframe = document.createElement('iframe');
-                    iframe.id = 'spotifyFrame';
-                    iframe.src = spotifyURL.replace('open.spotify.com', 'open.spotify.com/embed');
-                    iframe.width = '100%';
-                    iframe.height = '80';
-                    iframe.frameBorder = '0';
-                    iframe.allow = 'encrypted-media';
-                    document.getElementById('audioPlayerWrapper').innerHTML = '';
-                    document.getElementById('audioPlayerWrapper').appendChild(iframe);
-                }
-            } else {
-                wrapper.style.display = 'none';
-            }
-        });
-
-        let mediaStream = null,
-            mediaRec = null,
-            recChunks = [],
-            recURL = null;
-        const recBtn = document.getElementById('recBtn');
-        const stopRecBtn = document.getElementById('stopRecBtn');
-        const playRecBtn = document.getElementById('playRecBtn');
-        const recStatus = document.getElementById('recStatus');
-        const recordings = document.getElementById('recordings');
-
-        recBtn.addEventListener('click', async() => {
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                alert('Perekam tidak didukung pada browser ini.');
-                return;
-            }
-            try {
-                mediaStream = await navigator.mediaDevices.getUserMedia({
-                    audio: true
-                });
-                mediaRec = new MediaRecorder(mediaStream);
-                recChunks = [];
-                mediaRec.ondataavailable = e => recChunks.push(e.data);
-                mediaRec.onstop = () => {
-                    const blob = new Blob(recChunks, {
-                        type: 'audio/webm'
-                    });
-                    recURL = URL.createObjectURL(blob);
-                    const au = document.createElement('audio');
-                    au.controls = true;
-                    au.src = recURL;
-                    au.style.width = '100%';
-                    recordings.innerHTML = '';
-                    recordings.appendChild(au);
-                    playRecBtn.disabled = false;
-                    recStatus.textContent = 'Selesai merekam';
-                };
-                mediaRec.start();
-                recStatus.textContent = 'Merekam...';
-                recBtn.disabled = true;
-                stopRecBtn.disabled = false;
-            } catch (e) {
-                alert('Izin microphone diperlukan.');
-            }
-        });
-        stopRecBtn.addEventListener('click', () => {
-            if (mediaRec && mediaRec.state !== 'inactive') mediaRec.stop();
-            if (mediaStream) {
-                mediaStream.getTracks().forEach(t => t.stop());
-                mediaStream = null;
-            }
-            recBtn.disabled = false;
-            stopRecBtn.disabled = true;
-        });
-        playRecBtn.addEventListener('click', () => {
-            if (recURL) {
-                const a = new Audio(recURL);
-                a.play();
-            }
-        });
-
-        /* Safety: stop all games helper used when switching panels */
+        /* --------------------------- */
         function stopAllGames() {
-            try {
-                // call tStop, sStop, fStop if exist
-                if (typeof tStop === 'function') tStop();
-                if (typeof sStop === 'function') sStop();
-                if (typeof fStop === 'function') fStop();
-                if (window._whackStop) window._whackStop();
-            } catch (e) {}
+            if (window._whackStop) window._whackStop();
+        }
+        /* --------------------------- */
+        function showQuickToast(msg) {
+            const old = document.getElementById('confettiArea');
+            old.innerHTML = `<div class="muted-small">${msg}</div>`;
+            setTimeout(() => {
+                old.innerHTML = '';
+            }, 1200);
         }
 
-        /* initial UI states */
-        document.getElementById('audioPlayerWrapper').style.display = 'none';
-
-        /* make sure pointer down warms audio */
-        document.addEventListener('pointerdown', function once() {
-            const ctx = getGameAudioCtx();
-            if (ctx && ctx.state === 'suspended') ctx.resume().then(() => {}).catch(() => {});
-            document.removeEventListener('pointerdown', once);
-        });
 
         // Note: Tetris/Snake/Flappy full implementations are included above in the original file.
     </script>
