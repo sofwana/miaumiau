@@ -514,6 +514,7 @@
                 <div class="badge small">Score</div>
             </div>
 
+
             <div class="spotify-card">
                 <h4>Spotify Playlist</h4>
                 <div class="muted-small">Album / Playlist yang dapat diputar</div>
@@ -769,8 +770,8 @@
 
     <script>
         /* ---------------------------
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Utilities & UI switching
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        --------------------------- */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Utilities & UI switching
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                --------------------------- */
         const gameListEls = document.querySelectorAll('.game-option');
         const panels = {
             memory: document.getElementById('memory'),
@@ -2056,10 +2057,6 @@
                 window.dispatchEvent(evt);
             }
         };
-
-        /* ============================================================
-           WHACK-A-MOLE — SOURCE CODE ASLI KAMU (dipertahankan utuh)
-           ============================================================ */
         (function() {
             const canvas = document.getElementById('whCanvas');
             const ctx = canvas.getContext('2d');
@@ -2557,9 +2554,112 @@
                 old.innerHTML = '';
             }, 1200);
         }
+        /* ---------------------------
+          Spotify integration, Recorder, and others (kept original)
+        --------------------------- */
 
+        const spotifyURL = 'https://open.spotify.com/playlist/4kdhQOkaR43Rv7EAZ21mCS?si=05899fe4140040ae';
+        document.getElementById('openSpotify').addEventListener('click', () => window.open(spotifyURL, '_blank'));
+        document.getElementById('playSpotify').addEventListener('click', () => {
+            const wrapper = document.getElementById('audioPlayerWrapper');
+            if (wrapper.style.display === 'none' || wrapper.style.display === '') {
+                wrapper.style.display = 'block';
+                if (!document.getElementById('spotifyFrame')) {
+                    const iframe = document.createElement('iframe');
+                    iframe.id = 'spotifyFrame';
+                    iframe.src = spotifyURL.replace('open.spotify.com', 'open.spotify.com/embed');
+                    iframe.width = '100%';
+                    iframe.height = '80';
+                    iframe.frameBorder = '0';
+                    iframe.allow = 'encrypted-media';
+                    document.getElementById('audioPlayerWrapper').innerHTML = '';
+                    document.getElementById('audioPlayerWrapper').appendChild(iframe);
+                }
+            } else {
+                wrapper.style.display = 'none';
+            }
+        });
 
-        // Note: Tetris/Snake/Flappy full implementations are included above in the original file.
+        let mediaStream = null,
+            mediaRec = null,
+            recChunks = [],
+            recURL = null;
+        const recBtn = document.getElementById('recBtn');
+        const stopRecBtn = document.getElementById('stopRecBtn');
+        const playRecBtn = document.getElementById('playRecBtn');
+        const recStatus = document.getElementById('recStatus');
+        const recordings = document.getElementById('recordings');
+
+        recBtn.addEventListener('click', async() => {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                alert('Perekam tidak didukung pada browser ini.');
+                return;
+            }
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({
+                    audio: true
+                });
+                mediaRec = new MediaRecorder(mediaStream);
+                recChunks = [];
+                mediaRec.ondataavailable = e => recChunks.push(e.data);
+                mediaRec.onstop = () => {
+                    const blob = new Blob(recChunks, {
+                        type: 'audio/webm'
+                    });
+                    recURL = URL.createObjectURL(blob);
+                    const au = document.createElement('audio');
+                    au.controls = true;
+                    au.src = recURL;
+                    au.style.width = '100%';
+                    recordings.innerHTML = '';
+                    recordings.appendChild(au);
+                    playRecBtn.disabled = false;
+                    recStatus.textContent = 'Selesai merekam';
+                };
+                mediaRec.start();
+                recStatus.textContent = 'Merekam...';
+                recBtn.disabled = true;
+                stopRecBtn.disabled = false;
+            } catch (e) {
+                alert('Izin microphone diperlukan.');
+            }
+        });
+        stopRecBtn.addEventListener('click', () => {
+            if (mediaRec && mediaRec.state !== 'inactive') mediaRec.stop();
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(t => t.stop());
+                mediaStream = null;
+            }
+            recBtn.disabled = false;
+            stopRecBtn.disabled = true;
+        });
+        playRecBtn.addEventListener('click', () => {
+            if (recURL) {
+                const a = new Audio(recURL);
+                a.play();
+            }
+        });
+
+        /* Safety: stop all games helper used when switching panels */
+        function stopAllGames() {
+            try {
+                // call tStop, sStop, fStop if exist
+                if (typeof tStop === 'function') tStop();
+                if (typeof sStop === 'function') sStop();
+                if (typeof fStop === 'function') fStop();
+                if (window._whackStop) window._whackStop();
+            } catch (e) {}
+        }
+
+        /* initial UI states */
+        document.getElementById('audioPlayerWrapper').style.display = 'none';
+
+        /* make sure pointer down warms audio */
+        document.addEventListener('pointerdown', function once() {
+            const ctx = getGameAudioCtx();
+            if (ctx && ctx.state === 'suspended') ctx.resume().then(() => {}).catch(() => {});
+            document.removeEventListener('pointerdown', once);
+        });
     </script>
 </body>
 
