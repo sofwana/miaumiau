@@ -675,7 +675,7 @@
             </div>
 
             <!-- NEW: WHACK-A-MOLE -->
-           <div id="whack" class="game-panel" style="display:none">
+            <div id="whack" class="game-panel" style="display:none">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                     <div>
                         <h2>Whack a Problem</h2>
@@ -697,6 +697,7 @@
                             <div class="muted-small" style="margin-top:8px">"Kalau keju bisa bikin tikus senang, bayangin betapa senangnya aku kalau deket sama kamu." 🧀💖</div>
                             <div class="muted-small" style="margin-top:8px">"kamu tau ngga ? engga yaa pasti, yaudah aku kasih tau dehh aku cuma mau kasi tau kalau kamu itu imut sekali</div>
                         </div>
+
                         <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
                             <div style="font-weight:700">Instruksi Pembuat</div>
                             <div class="muted-small" style="margin-top:6px">Sayangi dan cintai sesama makhluk hidup. Dimulai dari mencintai aku😎</div>
@@ -708,7 +709,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
 
         </main>
@@ -764,8 +764,8 @@
 
     <script>
         /* ---------------------------
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Utilities & UI switching
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        --------------------------- */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Utilities & UI switching
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        --------------------------- */
         const gameListEls = document.querySelectorAll('.game-option');
         const panels = {
             memory: document.getElementById('memory'),
@@ -2051,9 +2051,12 @@
                 window.dispatchEvent(evt);
             }
         };
+
         (function() {
             const canvas = document.getElementById('whCanvas');
             const ctx = canvas.getContext('2d');
+            const startBtn = document.getElementById('whStart');
+            const resetBtn = document.getElementById('whReset');
             const roundEl = document.getElementById('whRound');
             const scoreEl = document.getElementById('whScore');
             const roundStatEl = document.getElementById('whRoundStat');
@@ -2368,7 +2371,7 @@
                 stopRender();
                 showModal(
                     'Berhasil Kamu Keren !!!',
-                    `(Skor akhir: ${whScore}) Kehidupan terkadang mempunyai hal-hal tak terduga seperti masalah muncul tiba tiba tanpa permisi tapi justru dari sana poin hidup kita bertambah, karena semakin sering masalah datang semakin cepat juga kita belajar memukul semuanya dengan senyuman jadi jangan takut dengan masalah yang muncul karena hidup itu bagaikan ronde demi ronde yang nggak makin mudah, cuma kamu yang akan semakin kuat dan ingat satu hal ini...masalah boleh muncul seenaknya, tetapi kamu tetap pemainnya bukan korbannya 🥰 `
+                    `Skor akhir: ${whScore} Kehidupan terkadang mempunyai hal-hal tak terduga seperti masalah muncul tiba tiba tanpa permisi tapi justru dari sana poin hidup kita bertambah, karena semakin sering masalah datang semakin cepat juga kita belajar memukul semuanya dengan senyuman jadi jangan takut dengan masalah yang muncul karena hidup itu bagaikan ronde demi ronde yang nggak makin mudah, cuma kamu yang akan semakin kuat dan ingat satu hal ini...masalah boleh muncul seenaknya, tetapi kamu tetap pemainnya bukan korbannya 🥰 `
                 );
                 scoresState.whack = whScore;
                 updateScores();
@@ -2376,7 +2379,36 @@
                 preventTouch = false;
             }
 
+            function startGame() {
+                if (whRunning) return;
+                whScore = 0;
+                whRound = 0;
+                scoreEl.textContent = whScore;
+                roundEl.textContent = whRound;
+                whRunning = true;
+                preventKeys = true;
+                preventTouch = true;
+                startRender();
+                startRound(0);
+            }
 
+            function resetGame() {
+                whRunning = false;
+                if (spawnTimer) {
+                    clearInterval(spawnTimer);
+                    spawnTimer = null;
+                }
+                activeMole = null;
+                whScore = 0;
+                whRound = 0;
+                scoreEl.textContent = whScore;
+                roundEl.textContent = whRound;
+                ptsPerHitEl.textContent = '0';
+                stopRender();
+                drawWhack();
+                preventKeys = false;
+                preventTouch = false;
+            }
 
             function hitAt(x, y) {
                 hammer.swinging = true;
@@ -2521,4 +2553,3 @@
 </body>
 
 </html>
-
