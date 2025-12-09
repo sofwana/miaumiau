@@ -675,7 +675,7 @@
             </div>
 
             <!-- NEW: WHACK-A-MOLE -->
-            <div id="whack" class="game-panel" style="display:none">
+           <div id="whack" class="game-panel" style="display:none">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                     <div>
                         <h2>Whack a Problem</h2>
@@ -683,36 +683,32 @@
                     </div>
                     <div class="muted-small">Round: <span id="whRound">0</span> • Score: <span id="whScore">0</span></div>
                 </div>
-
+                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+                </div>
                 <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start">
                     <div class="whack-canvas-wrap">
-                        <div class="game-canvas hammer-cursor" id="whCanvasWrap" style="padding:8px">
-                            <canvas id="whCanvas" width="520" height="360" style="touch-action:none"></canvas>
-                            <div style="margin-top:8px;display:flex;gap:8px;justify-content:center">
+                        <div class="game-canvas hammer-cursor" id="whCanvasWrap" style="padding:8px;max-width:720px;">
+                            <!-- Canvas width is responsive via CSS; internal drawing scales with devicePixelRatio -->
+                            <canvas id="whCanvas" width="520" height="360" style="touch-action:none;display:block"></canvas>
+                            <div style="font-weight:700">Ai louv eu</div>
+                            <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+                                <div class="skin-preview" id="whSkinPreview">😋</div>
                             </div>
+                            <div class="muted-small" style="margin-top:8px">"Kalau keju bisa bikin tikus senang, bayangin betapa senangnya aku kalau deket sama kamu." 🧀💖</div>
+                            <div class="muted-small" style="margin-top:8px">"kamu tau ngga ? engga yaa pasti, yaudah aku kasih tau dehh aku cuma mau kasi tau kalau kamu itu imut sekali</div>
                         </div>
-                        <div class="whack-sidebar">
-                            <div style="padding:10px;border-radius:12px;background:var(--card)">
-                                <div style="font-weight:700">Ai louv eu</div>
-                                <div style="display:flex;gap:8px;align-items:right;margin-top:8px">
-                                    <div class="skin-preview" id="whSkinPreview">😋</div>
-                                </div>
-                                <div class="muted-small" style="margin-top:8px">"Kalau keju bisa bikin tikus senang, bayangin betapa senangnya aku kalau deket sama kamu." 🧀💖</div>
-                                <div class="muted-small" style="margin-top:8px">"kamu tau ngga ? engga yaa pasti, yaudah aku kasih tau dehh aku cuma mau kasi tau kalau kamu itu imut sekali</div>
-                            </div>
-                            <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
-                                <div style="font-weight:700">Instruksi Pembuat</div>
-                                <div class="muted-small" style="margin-top:6px">Sayangi dan cintai sesama makhluk hidup. Dimulai dari mencintai aku😎</div>
-                            </div>
-
-                            <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
-                                <div style="font-weight:700">Stats Ronde</div>
-                                <div class="muted-small">Ronde saat ini: <span id="whRoundStat">0</span></div>
-                                <div class="muted-small">Poin/Hit: <span id="whPtsPerHit">10</span></div>
-                            </div>
+                        <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
+                            <div style="font-weight:700">Instruksi Pembuat</div>
+                            <div class="muted-small" style="margin-top:6px">Sayangi dan cintai sesama makhluk hidup. Dimulai dari mencintai aku😎</div>
+                        </div>
+                        <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
+                            <div style="font-weight:700">Stats Ronde</div>
+                            <div class="muted-small">Ronde saat ini: <span id="whRoundStat">0</span></div>
+                            <div class="muted-small">Poin/Hit: <span id="whPtsPerHit">10</span></div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
         </main>
@@ -2525,3 +2521,4 @@
 </body>
 
 </html>
+
