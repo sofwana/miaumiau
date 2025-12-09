@@ -496,7 +496,7 @@
             <div class="section-title">Pilihan Game</div>
             <div class="game-list" id="gameList">
                 <div class="game-option active" data-game="memory">Memory</div>
-                <div class="game-option" data-game="quiz">Quiz Cepat</div>
+                <div class="game-option" data-game="quiz">IPL</div>
                 <div class="game-option" data-game="tetris">Tetris</div>
                 <div class="game-option" data-game="snake">Snake</div>
                 <div class="game-option" data-game="flappy">Flappy</div>
@@ -574,13 +574,13 @@
             <div id="quiz" class="game-panel" style="display:none">
                 <div style="display:flex;justify-content:space-between;align-items:center">
                     <div>
-                        <h2>Quiz Cepat</h2>
+                        <h2>Ilmu Pengetahuan Louise</h2>
                         <div class="muted-small">10 pertanyaan. Jawab menggunakan hati dan perasaan.</div>
                     </div>
                     <div class="muted-small">pertanyaan: <span id="quizTimer"></span></div>
                 </div>
                 <div id="quizBody" style="margin-top:18px">
-                    <div id="quizQ" style="font-weight:700;font-size:18px">Kepo yaa....</div>
+                    <div id="quizQ" style="font-weight:700;font-size:18px">Ciee dilihat , emang bisa jawabnya ?</div>
                     <div class="quiz-opts" id="quizOpts"></div>
                 </div>
                 <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
@@ -682,67 +682,73 @@
                     </div>
                     <div class="muted-small">Round: <span id="whRound">0</span> • Score: <span id="whScore">0</span></div>
                 </div>
-                <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                </div>
+
                 <div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start">
                     <div class="whack-canvas-wrap">
-                        <div class="game-canvas hammer-cursor" id="whCanvasWrap" style="padding:8px;max-width:720px;">
-                            <!-- Canvas width is responsive via CSS; internal drawing scales with devicePixelRatio -->
-                            <canvas id="whCanvas" width="520" height="360" style="touch-action:none;display:block"></canvas>
-                            <div style="font-weight:700">Ai louv eu</div>
-                            <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-                                <div class="skin-preview" id="whSkinPreview">😋</div>
+                        <div class="game-canvas hammer-cursor" id="whCanvasWrap" style="padding:8px">
+                            <canvas id="whCanvas" width="520" height="360" style="touch-action:none"></canvas>
+                            <div style="margin-top:8px;display:flex;gap:8px;justify-content:center">
+                                <button class="btn" id="whStart">Start</button>
+                                <button class="btn-ghost" id="whReset">Reset</button>
                             </div>
-                            <div class="muted-small" style="margin-top:8px">"Kalau keju bisa bikin tikus senang, bayangin betapa senangnya aku kalau deket sama kamu." 🧀💖</div>
-                            <div class="muted-small" style="margin-top:8px">"kamu tau ngga ? engga yaa pasti, yaudah aku kasih tau dehh aku cuma mau kasi tau kalau kamu itu imut sekali</div>
                         </div>
+                        <div class="whack-sidebar">
+                            <div style="padding:10px;border-radius:12px;background:var(--card)">
+                                <div style="font-weight:700">Ai louv eu</div>
+                                <div style="display:flex;gap:8px;align-items:right;margin-top:8px">
+                                    <div class="skin-preview" id="whSkinPreview">😋</div>
+                                </div>
+                                <div class="muted-small" style="margin-top:8px">"Kalau keju bisa bikin tikus senang, bayangin betapa senangnya aku kalau deket sama kamu." 🧀💖</div>
+                                <div class="muted-small" style="margin-top:8px">"kamu tau ngga ? engga yaa pasti, yaudah aku kasih tau dehh aku cuma mau kasi tau kalau kamu itu imut sekali</div>
+                            </div>
+                            <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
+                                <div style="font-weight:700">Instruksi Pembuat</div>
+                                <div class="muted-small" style="margin-top:6px">Sayangi dan cintai sesama makhluk hidup. Dimulai dari mencintai aku😎</div>
+                            </div>
 
-                        <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
-                            <div style="font-weight:700">Instruksi Pembuat</div>
-                            <div class="muted-small" style="margin-top:6px">Sayangi dan cintai sesama makhluk hidup. Dimulai dari mencintai aku😎</div>
-                        </div>
-                        <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
-                            <div style="font-weight:700">Stats Ronde</div>
-                            <div class="muted-small">Ronde saat ini: <span id="whRoundStat">0</span></div>
-                            <div class="muted-small">Poin/Hit: <span id="whPtsPerHit">10</span></div>
+                            <div style="padding:10px;border-radius:12px;background:var(--card);text-align:center">
+                                <div style="font-weight:700">Stats Ronde</div>
+                                <div class="muted-small">Ronde saat ini: <span id="whRoundStat">0</span></div>
+                                <div class="muted-small">Poin/Hit: <span id="whPtsPerHit">10</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </div>
-    </main>
 
-    <aside class="right">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-                <div class="section-title">Petunjuk & Motivasi</div>
-                <div class="muted-small">Lakukan yang terbaik disetiap apa yang kamu lakukan dan jangan lupa untuk selalu tersenyum karena dunia ini terlalu hitam putih tanpa senyumanmu yang membuat berwarna ❤️‍🔥</div>
+        </main>
+
+        <aside class="right">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <div class="section-title">Petunjuk & Motivasi</div>
+                    <div class="muted-small">Lakukan yang terbaik disetiap apa yang kamu lakukan dan jangan lupa untuk selalu tersenyum karena dunia ini terlalu hitam putih tanpa senyumanmu yang membuat berwarna ❤️‍🔥</div>
+                </div>
+                <div id="attemptBadge" style="color:var(--muted);font-size:13px">—</div>
             </div>
-            <div id="attemptBadge" style="color:var(--muted);font-size:13px">—</div>
-        </div>
 
-        <div style="margin-top:18px">
-            <div style="padding:12px;border-radius:12px;background:var(--card)">
-                <div style="font-weight:700">Tips Cepat</div>
-                <ul class="muted-small" style="padding-left:16px;margin:8px 0 0 0">
-                    <li>Gunakan rotasi di Tetris untuk mengisi celah</li>
-                    <li>Gunakan pattern saat bermain Memory</li>
-                    <li>Pada mobile, gunakan tombol di layar</li>
-                    <li>Pada hati, sayangi aku agar hari harimu menyenangkan</li>
-                    <li>Pada hari harimu, libatkan aku dihari harimu yang mungkin melelahkan</li>
-                </ul>
+            <div style="margin-top:18px">
+                <div style="padding:12px;border-radius:12px;background:var(--card)">
+                    <div style="font-weight:700">Tips Cepat</div>
+                    <ul class="muted-small" style="padding-left:16px;margin:8px 0 0 0">
+                        <li>Gunakan rotasi di Tetris untuk mengisi celah</li>
+                        <li>Gunakan pattern saat bermain Memory</li>
+                        <li>Pada mobile, gunakan tombol di layar</li>
+                        <li>Pada hati, sayangi aku agar hari harimu menyenangkan</li>
+                        <li>Pada hari harimu, libatkan aku dihari harimu yang mungkin melelahkan</li>
+                        <li>Dalam setiap langkahmu, ajak aku untuk berbagi cerita, agar hari-harimu terasa lebih ringan dan penuh warna</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <div style="margin-top:18px">
-            <div style="padding:12px;border-radius:12px;background:var(--card);text-align:center">
-                <div style="font-weight:700">Motivasi Pembuat</div>
-                <div class="muted-small" style="margin-top:8px">Setiap permainan adalah kesempatan untuk membuatnya tersenyum bahagia :)</div>
-                <div style="margin-top:10px"><button class="btn-ghost" id="cheer">Berikan Semangat</button></div>
+            <div style="margin-top:18px">
+                <div style="padding:12px;border-radius:12px;background:var(--card);text-align:center">
+                    <div style="font-weight:700">Motivasi Pembuat</div>
+                    <div class="muted-small" style="margin-top:8px">Setiap permainan adalah kesempatan untuk membuatnya tersenyum bahagia :)</div>
+                    <div style="margin-top:10px"><button class="btn-ghost" id="cheer">Berikan Semangat</button></div>
+                </div>
             </div>
-        </div>
 
-    </aside>
+        </aside>
     </div>
 
     <footer>
@@ -763,8 +769,8 @@
 
     <script>
         /* ---------------------------
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Utilities & UI switching
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        --------------------------- */
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Utilities & UI switching
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        --------------------------- */
         const gameListEls = document.querySelectorAll('.game-option');
         const panels = {
             memory: document.getElementById('memory'),
@@ -965,45 +971,45 @@
         const quizScoreEl = document.getElementById('quizScore');
 
         const quizSet = [{
-            q: '1+1x0 =',
-            opts: ['0', '2', '1', '100', '3'],
+            q: 'Dimana louise tinggal ?',
+            opts: ['Labuan Bajo', 'Jakarta', 'Dihati pembuat', 'Kupang', 'NTT'],
             a: 2
         }, {
-            q: 'Apa yang dimaksud dengan "daur ulang"?',
-            opts: ['Menggunakan barang bekas untuk produk baru', 'Menghancurkan barang menjadi sampah', 'Menjual barang bekas', 'Membuang barang ke tempat sampah', 'membakar barang bekas'],
+            q: 'Tanggal berapa ulang tahun louise?',
+            opts: ['21 Agustus', '01 Januari', '30 Desember', '28 Februari', '15 Maret'],
             a: 0
         }, {
-            q: 'Apa unsur kimia dengan simbol " O " ?',
-            opts: ['Oksigen', 'Ozon', 'Oksida', 'Oksalat', 'Air'],
-            a: 0
+            q: 'Apa sapaan pertama lousie kepada si pembuat?',
+            opts: ['Awan', 'Amwan', 'Awam', 'Anwar', 'Antam'],
+            a: 2
         }, {
-            q: 'Siapa yang menulis novel "Harry Potter" ?',
-            opts: ['J.R.R Tolkien', 'George R.R. Martin', 'Suzanne Collins', 'J.K. Rowling', 'SOFWAN'],
+            q: 'Bela diri apa yang louise pernah ikuti ?',
+            opts: ['Silat', 'Taekwondo', 'Boxing', 'Juijutsu', 'Capoera'],
+            a: 1
+        }, {
+            q: 'Jurusan apa yang louise inginkan?',
+            opts: ['Pajak', 'Akuntan', 'Informatika', 'Hubungan Internasional', 'Opsi 1 & 2 benar'],
+            a: 4
+        }, {
+            q: 'Panggilan favorit louise kepada si pembuat?',
+            opts: ['Kakak', 'OM', 'Kakek', 'sayang', 'opa'],
             a: 3
         }, {
-            q: 'Apa yang membuat kamu selalu senyum-senyum pas baca chat aku?',
-            opts: ['Karena aku lucu', 'Karena aku cute banget', 'Karena kamu jatuh cinta diam diam', 'Karena aku pasti ngangenin', 'Semua benar, nggak bisa dipungkiri'],
-            a: 4
-        }, {
-            q: 'Apa yang paling penting dalam hidup kamu?',
-            opts: ['Makanan', 'Tidur', 'Uang', 'Senyum aku', 'Semua benar, yang pasti aku harus ada'],
-            a: 4
-        }, {
-            q: 'Kalau aku jadi superhero, kamu akan jadi apa?',
-            opts: ['Semua benar, karena pasti kita saling melengkapi', 'Sidekick yang setia', 'Penyelamat hati', 'Orang yang selalu ada di samping aku', 'Penonton yang selalu mendukung aku'],
-            a: 0
-        }, {
-            q: 'Apa ibu kota Jepang?',
-            opts: ['Tokyo', 'Kyoto', 'Seoul', 'Osaka', 'Jakarta'],
-            a: 0
-        }, {
-            q: 'Apa yang disukai oleh Louise?',
-            opts: ['Jajan', 'Bermain', 'Jalan-jalan', 'Sofwan', 'Berenang'],
+            q: 'Anime favorit louise margareth sepanjang masa?',
+            opts: ['Naruto', 'Demon Slayer', 'Hero academia', 'Spirited Away', 'Doraemon'],
             a: 3
         }, {
-            q: 'Apa yang selalu ada di hati louise?',
-            opts: ['Aku', 'Cuma aku', 'Selalu aku', 'Hanya aku', 'Sudah pasti semua benar'],
+            q: 'Apa panggilan si pembuat untuk Louise?',
+            opts: ['Louise', 'Pricylla', 'Anak kecil 14 tahun', 'Buaya betina', 'Sayang'],
             a: 4
+        }, {
+            q: 'Kemungkinan apa yang terjadi bila Louise dan si pembuat bertemu?',
+            opts: ['Saling sapa', 'Berpelukan', 'Mukbang', 'Saling diam', 'Tertawa bersama'],
+            a: 3
+        }, {
+            q: 'Sejak bulan apa pertama kali berinteraksi dengan si pembuat?',
+            opts: ['Mei', 'Maret', 'Januari', 'Agustus', 'April'],
+            a: 0
         }, ];
 
         let quizIndex = 0,
@@ -1045,7 +1051,7 @@
                     quizScoreEl.textContent = quizScore;
                     scoresState.quiz = quizScore;
                     updateScores();
-                    showModal('Quiz Selesai', `Nilai anda: ${quizScore} — selamat! hidup merupakan sebuah pilihan seperti quiz quiz ini ingin menjadi lebih baik.`);
+                    showModal('Quotes si Pembuat', `Nilai anda: (${quizScore}) Hati yang terluka memang butuh waktu untuk sembuh, tetapi jangan biarkan luka itu membuatmu menutup pintu hatimu untuk dunia. Berjalanlah dengan hati yang terbuka, meskipun dunia kadang mengecewakan, karena setiap pertemuan membawa kesempatan untuk melihat keindahan yang tersembunyi. Hati yang terbuka akan menemukan kedamaian dalam ketulusan dan kehangatan. `);
                     [...quizOptsEl.children].forEach(o => o.classList.add('locked'));
                     quizBusy = true;
                 } else {
@@ -2373,7 +2379,7 @@
                 stopRender();
                 showModal(
                     'Berhasil Kamu Keren !!!',
-                    `Skor akhir: ${whScore} Kehidupan terkadang mempunyai hal-hal tak terduga seperti masalah muncul tiba tiba tanpa permisi tapi justru dari sana poin hidup kita bertambah, karena semakin sering masalah datang semakin cepat juga kita belajar memukul semuanya dengan senyuman jadi jangan takut dengan masalah yang muncul karena hidup itu bagaikan ronde demi ronde yang nggak makin mudah, cuma kamu yang akan semakin kuat dan ingat satu hal ini...masalah boleh muncul seenaknya, tetapi kamu tetap pemainnya bukan korbannya 🥰 `
+                    `(Skor akhir: ${whScore}) Kehidupan terkadang mempunyai hal-hal tak terduga seperti masalah muncul tiba tiba tanpa permisi tapi justru dari sana poin hidup kita bertambah, karena semakin sering masalah datang semakin cepat juga kita belajar memukul semuanya dengan senyuman jadi jangan takut dengan masalah yang muncul karena hidup itu bagaikan ronde demi ronde yang nggak makin mudah, cuma kamu yang akan semakin kuat dan ingat satu hal ini...masalah boleh muncul seenaknya, tetapi kamu tetap pemainnya bukan korbannya 🥰 `
                 );
                 scoresState.whack = whScore;
                 updateScores();
